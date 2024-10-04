@@ -13,15 +13,15 @@ import Doge from "./Doge";
 import Cardano from "./Cardano";
 import Polkadot from "./Polkadot";
 // import ProtectedRoute from "./ProtectedRoute"; 
-import Spinner from "./Spinner";
+//import Spinner from "./Spinner";
 import IconComponent from "./IconBackground";
 import "./Questionmark.css";
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
   // const [authenticated, setAuthenticated] = useState(false); 
 
-  // Logout function
+  /* Logout function
   const logout = async () => {
     try {
       const response = await fetch('https://revised-backend.onrender.com/logout', {
@@ -39,7 +39,7 @@ function App() {
     } catch (error) {
       console.error('Error:', error.message);
     }
-  };
+  }; */
 
   /*
   // Function to check authentication status
@@ -80,7 +80,7 @@ function App() {
       <div className="App">
         <IconComponent />
         <header className="App-header">
-          <div id="logo-container" className="logo-container" title="Click to logout" onClick={logout}>
+          <div id="logo-container" className="logo-container" title="Click to logout">
             <div className="logo" id="logout-button">
               <span className="logo-text"><b>CRYPT</b></span>
               <div className="logo-gem-container">
@@ -117,7 +117,7 @@ function App() {
 
         {/* Routes without authentication */}
         <main>
-          <Routes>
+        <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/ethereum" element={<EthereumPage />} />
             <Route path="/bitcoin" element={<Bitcoin />} />
@@ -129,7 +129,7 @@ function App() {
             <Route path="/dogecoin" element={<Doge />} />
             <Route path="/cardano" element={<Cardano />} />
             <Route path="/polkadot" element={<Polkadot />} />
-          </Routes>
+        </Routes>
         </main>
       </div>
     </Router>
