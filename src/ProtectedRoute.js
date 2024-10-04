@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+/* import React, { useEffect, useState } from 'react';
 import Spinner from './Spinner'; 
 
 const ProtectedRoute = ({ element, authenticated }) => {
@@ -8,7 +8,7 @@ const ProtectedRoute = ({ element, authenticated }) => {
     if (!authenticated) {
       setShowSpinner(true);
       const timer = setTimeout(() => {
-        window.location.href = 'http://localhost:5000/login';
+        window.location.href = '/login';
       }, 500); 
 
       return () => clearTimeout(timer); 
@@ -22,4 +22,4 @@ const ProtectedRoute = ({ element, authenticated }) => {
   return showSpinner ? <Spinner /> : null; 
 };
 
-export default ProtectedRoute;
+export default ProtectedRoute; */
