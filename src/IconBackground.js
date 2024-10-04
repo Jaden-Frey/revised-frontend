@@ -5,34 +5,35 @@ const IconComponent = () => {
   useEffect(() => {
     const icons = document.querySelectorAll('.icon');
     const iconSize = 30;
+    const gap = 40; // Define a gap between icons for consistent spacing
     const positions = JSON.parse(localStorage.getItem('iconPositions')) || [];
 
-    function isOverlapping(x, y, size) {
-      return positions.some(({ x: px, y: py, size: ps }) => {
-        const dx = px - x;
-        const dy = py - y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        return distance < (ps / 2 + size / 2) * 2.5;
-      });
+    // Function to calculate positions based on a grid layout
+    function calculateGridPosition(index) {
+      const columns = Math.floor(window.innerWidth / (iconSize + gap));
+      const x = (index % columns) * (iconSize + gap);
+      const y = Math.floor(index / columns) * (iconSize + gap);
+      return { x, y };
     }
 
     icons.forEach((icon, index) => {
       let x, y;
 
+      // Check for previously stored positions or calculate a new grid position
       if (positions[index]) {
         ({ x, y } = positions[index]);
       } else {
-        do {
-          x = Math.random() * (window.innerWidth - iconSize);
-          y = Math.random() * (window.innerHeight - iconSize);
-        } while (isOverlapping(x, y, iconSize));
+        ({ x, y } = calculateGridPosition(index));
         positions.push({ x, y, size: iconSize });
         localStorage.setItem('iconPositions', JSON.stringify(positions));
       }
 
-      const size = 22.5 + Math.random() * 20;
-      const rotation = Math.random() * 360;
+      // Controlled randomness for size and rotation
+      const size = 17 + Math.random() * 10; // Limit size to ensure consistency
+      const rotation = Math.random() * 30 - 15; // Rotate icons by a smaller range for a cleaner look
 
+      // Apply calculated styles to each icon
+      icon.style.position = 'absolute';
       icon.style.left = `${x}px`;
       icon.style.top = `${y}px`;
       icon.style.fontSize = `${size}px`;
@@ -42,56 +43,46 @@ const IconComponent = () => {
 
   return (
     <div className="icon-background">
-        <i className="bi bi-currency-bitcoin icon"></i>
-        <i className="bi bi-graph-up icon"></i>
-        <i className="bi bi-currency-exchange icon"></i>
-        <i className="bi bi-cash-coin icon"></i>
-        <i className="bi bi-pie-chart icon"></i>
-        <i className="bi bi-bar-chart icon"></i>
-        <i className="bi bi-diagram-3 icon"></i>
-        <i className="bi bi-speedometer2 icon"></i>
-        <i className="bi bi-shield icon"></i>
-        <i className="bi bi-lightning icon"></i>
-        <i className="bi bi-currency-bitcoin icon"></i>
-        <i className="bi bi-graph-up icon"></i>
-        <i className="bi bi-currency-exchange icon"></i>
-        <i className="bi bi-cash-coin icon"></i>
-        <i className="bi bi-pie-chart icon"></i>
-        <i className="bi bi-bar-chart icon"></i>
-        <i className="bi bi-diagram-3 icon"></i>
-        <i className="bi bi-speedometer2 icon"></i>
-        <i className="bi bi-shield icon"></i>
-        <i className="bi bi-lightning icon"></i>
-        <i className="bi bi-currency-bitcoin icon"></i>
-        <i className="bi bi-graph-up icon"></i>
-        <i className="bi bi-currency-exchange icon"></i>
-        <i className="bi bi-cash-coin icon"></i>
-        <i className="bi bi-pie-chart icon"></i>
-        <i className="bi bi-bar-chart icon"></i>
-        <i className="bi bi-diagram-3 icon"></i>
-        <i className="bi bi-speedometer2 icon"></i>
-        <i className="bi bi-shield icon"></i>
-        <i className="bi bi-lightning icon"></i>
-        <i className="bi bi-currency-bitcoin icon"></i>
-        <i className="bi bi-graph-up icon"></i>
-        <i className="bi bi-currency-exchange icon"></i>
-        <i className="bi bi-cash-coin icon"></i>
-        <i className="bi bi-pie-chart icon"></i>
-        <i className="bi bi-bar-chart icon"></i>
-        <i className="bi bi-diagram-3 icon"></i>
-        <i className="bi bi-speedometer2 icon"></i>
-        <i className="bi bi-shield icon"></i>
-        <i className="bi bi-lightning icon"></i>
-        <i className="bi bi-currency-bitcoin icon"></i>
-        <i className="bi bi-graph-up icon"></i>
-        <i className="bi bi-currency-exchange icon"></i>
-        <i className="bi bi-cash-coin icon"></i>
-        <i className="bi bi-pie-chart icon"></i>
-        <i className="bi bi-bar-chart icon"></i>
-        <i className="bi bi-diagram-3 icon"></i>
-        <i className="bi bi-speedometer2 icon"></i>
-        <i className="bi bi-shield icon"></i>
-        <i className="bi bi-lightning icon"></i>
+      <i className="bi bi-currency-bitcoin icon"></i>
+      <i className="bi bi-graph-up icon"></i>
+      <i className="bi bi-currency-exchange icon"></i>
+      <i className="bi bi-cash-coin icon"></i>
+      <i className="bi bi-pie-chart icon"></i>
+      <i className="bi bi-bar-chart icon"></i>
+      <i className="bi bi-diagram-3 icon"></i>
+      <i className="bi bi-speedometer2 icon"></i>
+      <i className="bi bi-shield icon"></i>
+      <i className="bi bi-lightning icon"></i>
+      <i className="bi bi-currency-bitcoin icon"></i>
+      <i className="bi bi-graph-up icon"></i>
+      <i className="bi bi-currency-exchange icon"></i>
+      <i className="bi bi-cash-coin icon"></i>
+      <i className="bi bi-pie-chart icon"></i>
+      <i className="bi bi-bar-chart icon"></i>
+      <i className="bi bi-diagram-3 icon"></i>
+      <i className="bi bi-speedometer2 icon"></i>
+      <i className="bi bi-shield icon"></i>
+      <i className="bi bi-lightning icon"></i>
+      <i className="bi bi-currency-bitcoin icon"></i>
+      <i className="bi bi-graph-up icon"></i>
+      <i className="bi bi-currency-exchange icon"></i>
+      <i className="bi bi-cash-coin icon"></i>
+      <i className="bi bi-pie-chart icon"></i>
+      <i className="bi bi-bar-chart icon"></i>
+      <i className="bi bi-diagram-3 icon"></i>
+      <i className="bi bi-speedometer2 icon"></i>
+      <i className="bi bi-shield icon"></i>
+      <i className="bi bi-lightning icon"></i>
+      <i className="bi bi-currency-bitcoin icon"></i>
+      <i className="bi bi-graph-up icon"></i>
+      <i className="bi bi-currency-exchange icon"></i>
+      <i className="bi bi-cash-coin icon"></i>
+      <i className="bi bi-pie-chart icon"></i>
+      <i className="bi bi-bar-chart icon"></i>
+      <i className="bi bi-diagram-3 icon"></i>
+      <i className="bi bi-speedometer2 icon"></i>
+      <i className="bi bi-shield icon"></i>
+      <i className="bi bi-lightning icon"></i>
     </div>
   );
 };
