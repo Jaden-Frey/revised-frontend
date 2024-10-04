@@ -361,7 +361,7 @@ chartRefs.current.line = new Chart(lineCtx, {
   return (
     <div className="page-wrapper">
   <h1 className="page-title">Market Visualizations</h1>
-  <div className="faq-icon" onClick={() => window.location.href = 'http://localhost:5000/faq'}>
+  <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
     <i className="bi bi-question-circle" title="Off to FAQ"></i>
   </div>
   <div className="homepage-container">

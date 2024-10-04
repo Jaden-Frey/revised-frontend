@@ -948,7 +948,7 @@ const [showGroupedChartInfo, setShowGroupedChartInfo] = useState(false);
   return (
   <div className="dogepage-wrapper">
     <h1 className="page-title">Dogecoin Visualization's</h1>
-    <div className="faq-icon" onClick={() => window.location.href = 'http://localhost:5000/faq'}>
+    <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
     <i className="bi bi-question-circle" title="Off to FAQ"></i>
     </div>
 

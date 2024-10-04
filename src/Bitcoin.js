@@ -907,7 +907,7 @@ const toggleDoughnutChartInfo = () => setShowDoughnutChartInfo((prev) => !prev);
 return (
   <div className="bitcoinpage-wrapper">
       <h1 className="page-title">Bitcoin Visualizations</h1>
-      <div className="faq-icon" onClick={() => window.location.href = 'http://localhost:5000/faq'}>
+      <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
         <i className="bi bi-question-circle" title="Off to FAQ"></i>
       </div>
 
