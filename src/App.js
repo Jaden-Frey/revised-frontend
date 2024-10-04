@@ -12,7 +12,7 @@ import Xrp from "./Xrp";
 import Doge from "./Doge";
 import Cardano from "./Cardano";
 import Polkadot from "./Polkadot";
-// import ProtectedRoute from "./ProtectedRoute"; // Commented out since we're bypassing auth
+// import ProtectedRoute from "./ProtectedRoute"; 
 //import Spinner from "./Spinner";
 import IconComponent from "./IconBackground";
 import "./Questionmark.css";
