@@ -1,38 +1,157 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  background-color: #a9a9a9;
+  padding: 20px;
+  font-family: 'Fira Sans', sans-serif;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background: transparent;
+  min-height: 18vh;
+}
+
+/* app.css */
+.logo-container {
+  position: fixed;
+  left: 35px;
+  z-index: 102;
+  cursor: pointer;
+  transition: top 0.3s; 
+}
+
+.logo {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  z-index: 1000;
+  height: 60px;
+  width: 235px;
+  font-size: 1.5em;
+  color: #008080;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  background-color: #7E57C2; 
+  border-radius: 15px; 
+  padding: 5px 5px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s, transform 0.3s; 
+  border: 3px solid #010b13;
 }
 
-.App-link {
-  color: #61dafb;
+.logo:hover {
+  background-color: #555; 
+  transform: scale(1.05); 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo:active {
+  transform: scale(0.95); 
+}
+
+.logo-text {
+  margin: 0 10px;
+  color: #010b13; 
+  font-weight: bold;
+}
+
+.logo-gem-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #010b13;
+  border: 3px solid #218b82; 
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  transition: background-color 0.3s; 
+}
+
+.logo-gem {
+  font-size: 30px; 
+  color: #218b82;
+  transition: transform 0.3s; 
+}
+
+.marketpage-wrapper {
+  z-index: 2;
+  position: relative;
+}
+
+/* Page Title Styling */
+.page-title {
+  font-size: 2.5em;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #010b13;
+  background-color: #888;
+  border-radius: 25px;
+  padding: 15px 30px;
+  width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
+  display: inline-block;
+  border: 3px solid #010b13;
+  margin-top: 0px;
+  bottom: 100px;
+}
+
+/* Styling the navigation bar */
+nav {
+  position: relative;
+  width: 100%;
+  background-color: #010b13; 
+  display: flex;
+  height: 100px;
+  justify-content: center; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 100; 
+  padding: 10px 0; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+/* Menu styling */
+.menu {
+  list-style: none;
+  display: flex;
+  justify-content: center; 
+  margin-left: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.menu-item {
+  margin: 0 15px;
+  display: inline-block;
+}
+
+.menu-item a {
+  display: block;
+  margin-top: 10px;
+  color: #010b13; 
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  padding: 10px 20px; 
+  border-radius: 20px; 
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  background-color: #28A745; 
+  border: 3px solid #010b13;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item a:hover {
+  background-color: #008080; 
+  color: #010b13; 
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item a:active,
+.menu-item a.active {
+  background-color: #006f5f; 
+  color: #f5f5f5; 
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.1s ease, color 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
 }

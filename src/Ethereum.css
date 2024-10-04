@@ -1,0 +1,146 @@
+.ethereumchart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; 
+  gap: 20px; 
+  max-width: 1400px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.ethereumpage-wrapper {
+  z-index: 2;
+  position: relative;
+}
+
+.ethereumchart-wrapper {
+  flex: 1 1 calc(50% - 20px); 
+  max-width: calc(50% - 20px);
+  background-color: #939393;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; 
+}
+
+.ethereumchart-wrapper canvas {
+  background-color: #f0f0f0; 
+  border: 1px solid #C4BCC8; 
+  border-radius: 5px; 
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); 
+}
+
+.ethereumchart-container canvas {
+  width: 100%;
+  height: auto;
+  max-height: 475px; 
+}
+
+.ethereumchart-wrapper h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.ethereumchart-wrapper.combined {
+  flex: 1 1 100%; 
+  max-width: 100%; 
+}
+
+.ethereumchart-wrapper.combined canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 515px !important; 
+}
+
+.ethereumquery-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: 20px; 
+  background-color: #939393; 
+  border: 3px solid transparent; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1em;
+}
+
+.ethereumquery-container select {
+  font-size: 1em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  color: #f0f0f0;
+  padding: 0.375rem 0.75rem;
+  border: 3px solid transparent;
+  border-radius: 0.25rem;
+  background-color: #010b13;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  width: 100%;
+  cursor: pointer; 
+  position: relative;
+}
+
+.ethereumquery-container option {
+  font-size: 1em;
+  background-color: #aaa;
+  color: #010b13; 
+  font-weight: 600;
+}
+
+
+.ethereumchart-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 5px;
+position: relative;
+}
+
+.ethereumchart-header h2 {
+margin-top: 0;
+margin-bottom: 10px;
+font-size: 1.5em;
+text-align: center;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ethereumchart-details {
+display: block; 
+padding: 10px;
+background-color: #ccc;
+border-radius: 5px;
+margin-top: 10px;
+font-size: 1em;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-weight: 500;
+}
+
+.ethereuminfo-icon {
+font-size: 1.70rem; 
+cursor: pointer;  
+position: absolute;
+right: 25px;
+transition: transform 0.3s ease;
+}
+
+.ethereuminfo-icon:hover {
+transform: scale(1.1); 
+}
+
+.loading-indicator {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-size: 1.25em;
+font-size: 600;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #010b13; 
+margin-top: 10px;
+}
+
+.loading-indicator span {
+margin-left: 5px;
+font-weight: bold;
+letter-spacing: 1px;
+}
