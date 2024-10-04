@@ -15,7 +15,7 @@
   position: fixed;
   left: 35px;
   z-index: 102;
-  cursor: pointer;
+  cursor: default;
   transition: top 0.3s; 
 }
 
@@ -35,15 +35,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
   transition: background-color 0.3s, transform 0.3s; 
   border: 3px solid #010b13;
-}
-
-.logo:hover {
-  background-color: #555; 
-  transform: scale(1.05); 
-}
-
-.logo:active {
-  transform: scale(0.95); 
 }
 
 .logo-text {
