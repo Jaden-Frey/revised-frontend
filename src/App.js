@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import HomePage from "./HomePage";
+import IndexPage from "./Ind";
 import EthereumPage from "./EthereumPage";
 import Bitcoin from "./Bitcoin";
 import Tether from "./Tether";
@@ -59,7 +59,7 @@ function App() {
         {/* Routes without authentication */}
         <main>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<IndexPage />} />
             <Route path="/ethereum" element={<EthereumPage />} />
             <Route path="/bitcoin" element={<Bitcoin />} />
             <Route path="/tether" element={<Tether />} />

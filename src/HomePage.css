@@ -1,67 +1,58 @@
 
-.homechart-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 20px;
-    max-width: 1400px;
-    margin: auto;
-    margin-top: 20px;
-  }
-  
-  .homepage-wrapper {
-    z-index: 2;
-    position: relative;
-  }
-  
-  .homechart-wrapper {
-    flex: 1 1 calc(50% - 20px);
-    max-width: calc(50% - 20px);
-    background-color: #939393;
-    border: 3px solid transparent;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    position: relative;
-  }
-  
-  .homechart-wrapper canvas {
-    background-color: #f0f0f0;
-    border: 1px solid #C4BCC8;
-    border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .homechart-container canvas {
-    width: 100%;
-    height: auto;
-    max-height: 475px;
-  }
-  
-  .homechart-wrapper.bar {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-  
-  .homechart-wrapper.bar canvas {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 515px !important;
-  }
-  
-  .homechart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-  
-  .homechart-header h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
+.page-wrapper {
+  z-index: 2;
+  position: relative;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; 
+  gap: 20px; 
+  max-width: 900px;
+  margin: auto;
+  margin-top: 20px;
+  background-color: #bbb;
+  padding: 10px; 
+  border-radius: 8px;
+}
+
+.chart-wrapper {
+  flex: 1 1 calc(50% - 20px);
+  max-width: calc(50% - 20px);
+  background-color: #939393;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.chart-wrapper canvas {
+  background-color: #f0f0f0;
+  border: 1px solid #C4BCC8;
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.chart-header h2 {
+  margin-top: 0;
+  font-size: 1.25em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.chart-container canvas {
+  width: 100%;
+  height: 360px;
+}

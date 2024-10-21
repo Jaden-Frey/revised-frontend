@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
-import "./HomePage.css";
+import "./Ind.css";
 import "./Questionmark.css";
 
-function HomePage() {
+function IndexPage() {
   const [coinData, setCoinData] = useState({});
   const chartRefs = useRef({ bar: null, scatter: null, line: null });
   
@@ -367,7 +367,7 @@ chartRefs.current.line = new Chart(lineCtx, {
   <div className="page-container">
     <div className="chart-container">
       {/* Bar Chart */}
-      <div className="chart-wrapper">
+      <div className="chart-wrapper bar">
         <div className="chart-header">
           <h2>Comparative Bar Chart for All Coins</h2>
         </div>
@@ -375,7 +375,7 @@ chartRefs.current.line = new Chart(lineCtx, {
       </div>
 
       {/* Scatter Chart */}
-      <div className="chart-wrapper">
+      <div className="chart-wrapper bar">
         <div className="chart-header">
           <h2>Scatter Chart for All Coins</h2>
         </div>
@@ -383,7 +383,7 @@ chartRefs.current.line = new Chart(lineCtx, {
       </div>
 
       {/* Dual Axis Line Chart */}
-      <div className="chart-wrapper">
+      <div className="chart-wrapper bar">
         <div className="chart-header">
           <h2>Dual Axis Line Chart for All Coins</h2>
         </div>
@@ -395,4 +395,4 @@ chartRefs.current.line = new Chart(lineCtx, {
   );
 }
 
-export default HomePage;
+export default IndexPage;
