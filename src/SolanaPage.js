@@ -944,6 +944,101 @@ const toggleDoughnutChartInfo = () => setShowDoughnutChartInfo((prev) => !prev);
 const toggleSpeScatterChartInfo = () => setShowSpeScatterChartInfo((prev) => !prev);
 const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
 
+// State for Polar Chart Insights
+const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+const [polarInsightContent, setPolarInsightContent] = useState(null);
+const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+}, [currentPolarInsight, validPolarInsights]);
+
+const handleNextPolarInsight = () => {
+  const nextIndex = currentPolarInsight + 1;
+  setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevPolarInsight = () => {
+  const prevIndex = currentPolarInsight - 1;
+  setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+};
+
+// State for Doughnut Chart Insights
+const [currentDoughnutInsight, setCurrentDoughnutInsight] = useState(0);
+const [doughnutInsightContent, setDoughnutInsightContent] = useState(null);
+const validDoughnutInsights = doughnutInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setDoughnutInsightContent(validDoughnutInsights.length > 0 ? validDoughnutInsights[currentDoughnutInsight] : null);
+}, [currentDoughnutInsight, validDoughnutInsights]);
+
+const handleNextDoughnutInsight = () => {
+  const nextIndex = currentDoughnutInsight + 1;
+  setCurrentDoughnutInsight(nextIndex >= validDoughnutInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevDoughnutInsight = () => {
+  const prevIndex = currentDoughnutInsight - 1;
+  setCurrentDoughnutInsight(prevIndex < 0 ? validDoughnutInsights.length - 1 : prevIndex);
+};
+
+// State for specScatter Chart Insights
+const [currentSpeScatterInsight, setCurrentSpeScatterInsight] = useState(0);
+const [scatterSpeInsightContent, setScatterSpeInsightContent] = useState(null);
+const validSpeScatterInsights = speScatterInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setScatterSpeInsightContent(validSpeScatterInsights.length > 0 ? validSpeScatterInsights[currentSpeScatterInsight] : null);
+}, [currentSpeScatterInsight, validSpeScatterInsights]);
+
+const handleNextSpeScatterInsight = () => {
+  const nextIndex = currentSpeScatterInsight + 1;
+  setCurrentSpeScatterInsight(nextIndex >= validSpeScatterInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevSpeScatterInsight = () => {
+  const prevIndex = currentSpeScatterInsight - 1;
+  setCurrentSpeScatterInsight(prevIndex < 0 ? validSpeScatterInsights.length - 1 : prevIndex);
+};
+
+// State for Line Chart Insights
+const [currentLineInsight, setCurrentLineInsight] = useState(0);
+const [lineInsightContent, setLineInsightContent] = useState(null);
+const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+}, [currentLineInsight, validLineInsights]);
+
+const handleNextLineInsight = () => {
+  const nextIndex = currentLineInsight + 1;
+  setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevLineInsight = () => {
+  const prevIndex = currentLineInsight - 1;
+  setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+};
+
+// State for genScatter Chart Insights
+const [currentGenScatterInsight, setCurrentGenScatterInsight] = useState(0);
+const [scatterGenInsightContent, setScatterGenInsightContent] = useState(null);
+const validGenScatterInsights = genScatterInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setScatterGenInsightContent(validGenScatterInsights.length > 0 ? validGenScatterInsights[currentGenScatterInsight] : null);
+}, [currentGenScatterInsight, validGenScatterInsights]);
+
+const handleNextGenScatterInsight = () => {
+  const nextIndex = currentGenScatterInsight + 1;
+  setCurrentGenScatterInsight(nextIndex >= validGenScatterInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevGenScatterInsight = () => {
+  const prevIndex = currentGenScatterInsight - 1;
+  setCurrentGenScatterInsight(prevIndex < 0 ? validGenScatterInsights.length - 1 : prevIndex);
+};
+
   return (
   <div className="solanapage-wrapper">
     <h1 className="page-title">Solana Visualization's</h1>
@@ -954,25 +1049,25 @@ const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
     <div className="solanachart-container">
     <div className="solanaquery-container">
                   <select value={lineQuery} onChange={handleLineQueryChange}>
-                      <option value="" hidden>📉 Select Line Chart Option</option>
+                      <option value="" hidden>📉 Line Chart </option>
                       <option value="market_cap_vs_circulating_supply">📉 Market Cap vs. Circulating Supply </option>
-                      <option value="full_metrics_line"> 📉 All Line Metrics </option>
+                      <option value="full_metrics_line"> 📉 Reset </option>
                   </select>
       </div>
   
       <div className="solanaquery-container">
                   <select value={polarQuery} onChange={handlePolarQueryChange}>
-                      <option value="" hidden>❄️ Select Polar Chart Option</option>
+                      <option value="" hidden>❄️ Polar Chart </option>
                       <option value="market_cap_vs_volume"> ❄️ Market Cap vs. Volume </option>
-                      <option value="full_metrics_polar"> ❄️ All Polar Metrics </option>
+                      <option value="full_metrics_polar"> ❄️ Reset </option>
                   </select>
       </div>
 
       <div className="solanaquery-container">
                   <select value={doughnutQuery} onChange={handleDoughnutQueryChange}>
-                     <option value="" hidden>🍩 Select Doughnut Chart Option</option>
+                     <option value="" hidden>🍩 Doughnut Chart </option>
                      <option value="volume_vs_supply"> 🍩 Volume vs. Supply </option>
-                     <option value="full_metrics_doughnut"> 🍩 All Doughnut Metrics </option>
+                     <option value="full_metrics_doughnut"> 🍩 Reset </option>
                   </select>
       </div>
 
@@ -981,83 +1076,116 @@ const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
             value={scatterGenQuery || scatterSpeQuery} 
             onChange={handleGenScatterOrSpeScatterQueryChange}
           >
-            <option value="" hidden>🌍🔎 Select General or Advanced Scatter Option</option>
+            <option value="" hidden>🌍🔎 General / Advanced Scatter </option>
             <option value="market_cap_vs_volume_vs_price">🌍 Market Cap vs. Volume vs. Price</option>
-            <option value="full_metrics_scatter">🌍 All General Scatter Metrics</option>
-            <option value="full_metrics_speScatter">🔎 All Advanced Metrics</option>
+            <option value="full_metrics_scatter">🌍🔎 Reset </option>
+            <option value="full_metrics_speScatter">🔎 Advanced Metrics</option>
           </select>
       </div>
 
-<div className="solanachart-container">
-      {/* Polar Area Chart */}
-<div className="solanachart-wrapper line">
-  <div className="solanachart-header">
-    <h2>Polar Area Chart for Solana KPIs</h2>
-    {polarQuery === 'market_cap_vs_volume' && (
-       <span className="solanainfo-icon" title="More Information">🤔</span> 
-     )}
-  </div>
-  <canvas id="solPolarAreaChart"></canvas>
-  {loadingPolar ? (
-      <div className="loading-indicator">
+      <div className="solanachart-container">
+  {/* Polar Area Chart */}
+  <div className="solanachart-wrapper bar">
+    <div className="solanachart-header">
+      <h2>Polar Area Chart for Solana KPIs</h2>
+      {polarQuery === 'market_cap_vs_volume' && (
+        <span className="solanainfo-icon" title="More Information">🤔</span>
+      )}
+    </div>
+    <canvas id="solPolarAreaChart"></canvas>
+    {loadingPolar ? (
+      <div className="solanaloading-indicator">
         Fetching insights<LoadingEllipsis />
       </div>
     ) : (
-      polarInsights && (
+      polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' &&  (
         <div className="solanachart-details">
-          <p>{polarInsights}</p>
+          <div key={currentPolarInsight} className="solanachart-item">
+            <div className="solanachart-header">
+              <span>{currentPolarInsight + 1}. </span>
+            </div>
+            <div className="solanachart-content">
+              {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+            </div>
+            <div className="solanainsight-navigation">
+              <span className="solananav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+              <span className="solananav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+            </div>
+          </div>
         </div>
       )
     )}
   </div>
 
-{/* Doughnut Chart */}
-<div className="solanachart-wrapper line">
-  <div className="solanachart-header">
-    <h2>Doughnut Chart for Solana Metrics</h2>
-    {doughnutQuery === 'volume_vs_supply' && (
-        <span className="solanainfo-icon" title="More Information">🤔</span> 
-    )}
-  </div>
-  <canvas id="solDoughnutChart"></canvas>
-  {loadingDoughnut ? (
-      <div className="loading-indicator">
+  {/* Doughnut Chart */}
+  <div className="solanachart-wrapper bar">
+    <div className="solanachart-header">
+      <h2>Doughnut Chart for Solana Metrics</h2>
+      {doughnutQuery === 'volume_vs_supply' && (
+        <span className="solanainfo-icon" title="More Information">🤔</span>
+      )}
+    </div>
+    <canvas id="solDoughnutChart"></canvas>
+    {loadingDoughnut ? (
+      <div className="solanaloading-indicator">
         Fetching insights<LoadingEllipsis />
       </div>
     ) : (
-      doughnutInsights && (
+      doughnutInsights && validDoughnutInsights.length > 0 && doughnutQuery !== 'full_metrics_doughnut' && (
         <div className="solanachart-details">
-          <p>{doughnutInsights}</p>
+          <div key={currentDoughnutInsight} className="solanachart-item">
+            <div className="solanachart-header">
+              <span>{currentDoughnutInsight + 1}. </span>
+            </div>
+            <div className="solanachart-content">
+              {doughnutInsightContent ? doughnutInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+            </div>
+            <div className="solanainsight-navigation">
+              <span className="solananav-arrow" onClick={handlePrevDoughnutInsight}>{'<'}</span>
+              <span className="solananav-arrow" onClick={handleNextDoughnutInsight}>{'>'}</span>
+            </div>
+          </div>
         </div>
       )
     )}
   </div>
 
-  {/* Standard Scatter Chart */}
-  <div className="solanachart-wrapper line">
-    <div className="solanachart-header"> {/* Updated to match CSS */}
+  {/* General Scatter Chart */}
+  <div className="solanachart-wrapper bar">
+    <div className="solanachart-header">
       <h2>Scatterplot Chart for Solana Metrics</h2>
       {scatterGenQuery === 'market_cap_vs_volume_vs_price' && (
-          <span className="solanainfo-icon" title="More Information">🤔</span>
+        <span className="solanainfo-icon" title="More Information">🤔</span>
       )}
     </div>
     <canvas id="solGenScatterChart"></canvas>
     {loadingGenScatter ? (
-      <div className="loading-indicator">
+      <div className="solanaloading-indicator">
         Fetching insights<LoadingEllipsis />
       </div>
     ) : (
-      genScatterInsights && (
+      genScatterInsights && validGenScatterInsights.length > 0 && scatterGenQuery !== 'full_metrics_scatter' && (
         <div className="solanachart-details">
-          <p>{genScatterInsights}</p>
+          <div key={currentGenScatterInsight} className="solanachart-item">
+            <div className="solanachart-header">
+              <span>{currentGenScatterInsight + 1}. </span>
+            </div>
+            <div className="solanachart-content">
+              {scatterGenInsightContent ? scatterGenInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+            </div>
+            <div className="solanainsight-navigation">
+              <span className="solananav-arrow" onClick={handlePrevGenScatterInsight}>{'<'}</span>
+              <span className="solananav-arrow" onClick={handleNextGenScatterInsight}>{'>'}</span>
+            </div>
+          </div>
         </div>
       )
     )}
   </div>
 
   {/* Line Chart */}
-  <div className="solanachart-wrapper line">
-    <div className="solanachart-header"> {/* Updated to match CSS */}
+  <div className="solanachart-wrapper bar">
+    <div className="solanachart-header">
       <h2>Line Graph for Solana Metrics</h2>
       {lineQuery === 'market_cap_vs_circulating_supply' && (
         <span className="solanainfo-icon" title="More Information">🤔</span>
@@ -1065,40 +1193,62 @@ const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
     </div>
     <canvas id="solLineChart"></canvas>
     {loadingLine ? (
-      <div className="loading-indicator">
+      <div className="solanaloading-indicator">
         Fetching insights<LoadingEllipsis />
       </div>
     ) : (
-      lineInsights && (
+      lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
         <div className="solanachart-details">
-          <p>{lineInsights}</p>
+          <div key={currentLineInsight} className="solanachart-item">
+            <div className="solanachart-header">
+              <span>{currentLineInsight + 1}. </span>
+            </div>
+            <div className="solanachart-content">
+              {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+            </div>
+            <div className="solanainsight-navigation">
+              <span className="solananav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+              <span className="solananav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+            </div>
+          </div>
         </div>
       )
     )}
   </div>
 
-   {/* Advanced Scatter Chart */}
-   <div className="solanachart-wrapper line">
-    <div className="solanachart-header"> {/* Updated to match CSS */}
+  {/* Advanced Scatter Chart */}
+  <div className="solanachart-wrapper bar">
+    <div className="solanachart-header">
       <h2>Advanced Scatterplot Chart for Solana Metrics</h2>
       {scatterSpeQuery === 'full_metrics_speScatter' && (
-        <span className="solanainfo-icon" title="More Information">🤔</span>
+        <span className="solanainfo-icon" title="More Information"></span>
       )}
     </div>
     <canvas id="solSpeScatterChart"></canvas>
     {loadingSpeScatter ? (
-      <div className="loading-indicator">
+      <div className="solanaloading-indicator">
         Fetching insights<LoadingEllipsis />
       </div>
     ) : (
-      speScatterInsights && (
+      speScatterInsights && validSpeScatterInsights.length > 0 && scatterGenQuery !== 'full_metrics_scatter' &&(
         <div className="solanachart-details">
-          <p>{speScatterInsights}</p>
+          <div key={currentSpeScatterInsight} className="solanachart-item">
+            <div className="solanachart-header">
+              <span>{currentSpeScatterInsight + 1}. </span>
+            </div>
+            <div className="solanachart-content">
+              {scatterSpeInsightContent ? scatterSpeInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+            </div>
+            <div className="solanainsight-navigation">
+              <span className="solananav-arrow" onClick={handlePrevSpeScatterInsight}>{'<'}</span>
+              <span className="solananav-arrow" onClick={handleNextSpeScatterInsight}>{'>'}</span>
+            </div>
+          </div>
         </div>
       )
     )}
   </div>
-  </div>
+</div>
 </div>
 </div>
   );

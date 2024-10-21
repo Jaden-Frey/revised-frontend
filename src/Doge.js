@@ -945,6 +945,105 @@ const [showGroupedChartInfo, setShowGroupedChartInfo] = useState(false);
  const toggleStackedChartInfo = () => setShowStackedChartInfo((prev) => !prev);
  const toggleGroupedChartInfo = () => setShowGroupedChartInfo((prev) => !prev);
 
+ // State for Polar Chart Insights
+const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+const [polarInsightContent, setPolarInsightContent] = useState(null);
+const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+}, [currentPolarInsight, validPolarInsights]);
+
+const handleNextPolarInsight = () => {
+  const nextIndex = currentPolarInsight + 1;
+  setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevPolarInsight = () => {
+  const prevIndex = currentPolarInsight - 1;
+  setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+};
+
+// State for Grouped Bar Chart Insights
+const [currentGroupedBarInsight, setCurrentGroupedBarInsight] = useState(0);
+const [groupedBarInsightContent, setGroupedBarInsightContent] = useState(null);
+const validGroupedBarInsights = groupedInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setGroupedBarInsightContent(
+    validGroupedBarInsights.length > 0 ? validGroupedBarInsights[currentGroupedBarInsight] : null
+  );
+}, [currentGroupedBarInsight, validGroupedBarInsights]);
+
+const handleNextGroupedBarInsight = () => {
+  const nextIndex = currentGroupedBarInsight + 1;
+  setCurrentGroupedBarInsight(nextIndex >= validGroupedBarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevGroupedBarInsight = () => {
+  const prevIndex = currentGroupedBarInsight - 1;
+  setCurrentGroupedBarInsight(prevIndex < 0 ? validGroupedBarInsights.length - 1 : prevIndex);
+};
+
+// State for Line Chart Insights
+const [currentLineInsight, setCurrentLineInsight] = useState(0);
+const [lineInsightContent, setLineInsightContent] = useState(null);
+const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+}, [currentLineInsight, validLineInsights]);
+
+const handleNextLineInsight = () => {
+  const nextIndex = currentLineInsight + 1;
+  setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevLineInsight = () => {
+  const prevIndex = currentLineInsight - 1;
+  setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+};
+
+// State for Waterfall Bar Chart Insights
+const [currentWaterfallBarInsight, setCurrentWaterfallBarInsight] = useState(0);
+const [waterfallBarInsightContent, setWaterfallBarInsightContent] = useState(null);
+const validWaterfallBarInsights = waterfallInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setWaterfallBarInsightContent(validWaterfallBarInsights.length > 0 ? validWaterfallBarInsights[currentWaterfallBarInsight] : null);
+}, [currentWaterfallBarInsight, validWaterfallBarInsights]);
+
+const handleNextWaterfallBarInsight = () => {
+  const nextIndex = currentWaterfallBarInsight + 1;
+  setCurrentWaterfallBarInsight(nextIndex >= validWaterfallBarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevWaterfallBarInsight = () => {
+  const prevIndex = currentWaterfallBarInsight - 1;
+  setCurrentWaterfallBarInsight(prevIndex < 0 ? validWaterfallBarInsights.length - 1 : prevIndex);
+};
+
+// State for Stacked Bar Chart Insights
+const [currentStackedInsight, setCurrentStackedInsight] = useState(0);
+const [stackedInsightContent, setStackedInsightContent] = useState(null);
+const validStackedInsights = stackedInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setStackedInsightContent(validStackedInsights.length > 0 ? validStackedInsights[currentStackedInsight] : null);
+}, [currentStackedInsight, validStackedInsights]);
+
+const handleNextStackedInsight = () => {
+  const nextIndex = currentStackedInsight + 1;
+  setCurrentStackedInsight(nextIndex >= validStackedInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevStackedInsight = () => {
+  const prevIndex = currentStackedInsight - 1;
+  setCurrentStackedInsight(prevIndex < 0 ? validStackedInsights.length - 1 : prevIndex);
+};
+
+
+
   return (
   <div className="dogepage-wrapper">
     <h1 className="page-title">Dogecoin Visualization's</h1>
@@ -955,9 +1054,9 @@ const [showGroupedChartInfo, setShowGroupedChartInfo] = useState(false);
     <div className="dogechart-container">
     <div className="dogequery-container">
                 <select value={lineQuery} onChange={handleLineQueryChange}>
-                    <option value="" hidden>📉 Select Line Chart Option</option>
+                    <option value="" hidden>📉 Line Chart </option>
                     <option value="market_cap_vs_circulating_supply"> 📉 Market Cap vs. Circulating Supply </option>
-                    <option value="full_metrics_line"> 📉 All Line Metrics </option>
+                    <option value="full_metrics_line"> 📉 Reset </option>
                 </select>
     </div>
 
@@ -966,137 +1065,182 @@ const [showGroupedChartInfo, setShowGroupedChartInfo] = useState(false);
             value={groupedQuery || stackedQuery} 
             onChange={handleGroupedOrStackedQueryChange}
           >
-            <option value="" hidden>📶🏗️ Select Grouped or Stacked Chart Option</option>
+            <option value="" hidden>📶🏗️ Grouped / Stacked Chart </option>
             <option value="grouped_metrics">📶 Market Cap vs. Volume</option>
-            <option value="full_metrics_bar">📶 All Grouped Metrics</option>
-            <option value="full_metrics_stacked">🏗️ All Stacked Metrics</option>
+            <option value="full_metrics_bar">📶🏗️ Reset </option>
+            <option value="full_metrics_stacked">🏗️ Stacked Metrics </option>
           </select>
    </div>
 
     <div className="dogequery-container">
                 <select value={barQuery} onChange={handleBarQueryChange}>
-                    <option value="" hidden>📊 Select Waterfall Bar Chart Option</option>
+                    <option value="" hidden>📊 Waterfall Bar Chart </option>
                     <option value="valuation_metrics"> 📊 Performance Metrics </option>
-                    <option value="full_metrics_bar"> 📊 All Waterfall Bar Metrics </option>
+                    <option value="full_metrics_bar"> 📊 Reset </option>
                 </select>
     </div>
 
     <div className="dogequery-container">
                 <select value={polarQuery} onChange={handlePolarQueryChange}>
-                    <option value="" hidden>❄️ Select Polar Chart Option</option>
+                    <option value="" hidden>❄️ Polar Chart </option>
                     <option value="market_cap_vs_total_volume"> ❄️ Market Cap vs. Total Volume </option>
-                    <option value="full_metrics_polar"> ❄️ All Polar Metrics </option>
+                    <option value="full_metrics_polar"> ❄️ Reset </option>
                 </select>
     </div>
     
-    {/* Polar Area Chart */}
-    <div className="dogechart-wrapper polar">
+   {/* Polar Area Chart */}
+   <div className="dogechart-wrapper bar">
         <div className="dogechart-header">
           <h2>Polar Area Chart for Dogecoin KPIs</h2>
           {polarQuery === 'market_cap_vs_total_volume' && (
-          <span className="dogeinfo-icon" title="More Information">🤔</span> 
+            <span className="dogeinfo-icon" title="More Information">🤔</span>
           )}
         </div>
         <canvas id="dogePolarAreaChart"></canvas>
         {loadingPolar ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+          <div className="dogeloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' &&  (
+            <div className="dogechart-details">
+              <div key={currentPolarInsight} className="dogechart-item">
+                <div className="dogechart-header">
+                  <span>{currentPolarInsight + 1}. </span>
+                </div>
+                <div className="dogechart-content">
+                  {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="dogeinsight-navigation">
+                  <span className="dogenav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+                  <span className="dogenav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      polarInsights && (
-        <div className="dogechart-details">
-          <p>{polarInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
       {/* Line Graph */}
-      <div className="dogechart-wrapper line">
+      <div className="dogechart-wrapper bar">
         <div className="dogechart-header">
           <h2>Line Graph for Dogecoin Metrics</h2>
           {lineQuery === 'market_cap_vs_circulating_supply' && (
-          <span className="dogeinfo-icon" title="More Information">🤔</span> 
+            <span className="dogeinfo-icon" title="More Information">🤔</span>
           )}
         </div>
         <canvas id="dogeLineChart"></canvas>
         {loadingLine ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+          <div className="loading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' &&  (
+            <div className="dogechart-details">
+              <div key={currentLineInsight} className="dogechart-item">
+                <div className="dogechart-header">
+                  <span>{currentLineInsight + 1}. </span>
+                </div>
+                <div className="dogechart-content">
+                  {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="dogeinsight-navigation">
+                  <span className="dogenav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+                  <span className="dogenav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      lineInsights && (
-        <div className="dogechart-details">
-          <p>{lineInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
       {/* Waterfall Bar Chart */}
       <div className="dogechart-wrapper bar">
         <div className="dogechart-header">
           <h2>Waterfall Bar Chart for Dogecoin Metrics</h2>
           {barQuery === 'valuation_metrics' && (
-          <span className="dogeinfo-icon" title="More Information">🤔</span> 
+            <span className="dogeinfo-icon" title="More Information">🤔</span>
           )}
         </div>
         <canvas id="dogeWaterfallBarChart"></canvas>
         {loadingWaterfall ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+          <div className="loading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          waterfallInsights && validWaterfallBarInsights.length > 0 && barQuery !== 'full_metrics_bar' &&  (
+            <div className="dogechart-details">
+              <div key={currentWaterfallBarInsight} className="dogechart-item">
+                <div className="dogechart-header">
+                  <span>{currentWaterfallBarInsight + 1}. </span>
+                </div>
+                <div className="dogechart-content">
+                  {waterfallBarInsightContent ? waterfallBarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="dogeinsight-navigation">
+                  <span className="dogenav-arrow" onClick={handlePrevWaterfallBarInsight}>{'<'}</span>
+                  <span className="dogenav-arrow" onClick={handleNextWaterfallBarInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      waterfallInsights && (
-        <div className="dogechart-details">
-          <p>{waterfallInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
       {/* Grouped Bar Chart */}
-      <div className="dogechart-wrapper sbar">
+      <div className="dogechart-wrapper bar">
         <div className="dogechart-header">
           <h2>Grouped Bar Chart for Dogecoin Metrics</h2>
           {groupedQuery === 'grouped_metrics' && (
-          <span className="dogeinfo-icon" title="More Information">🤔</span> 
+            <span className="dogeinfo-icon" title="More Information">🤔</span>
           )}
         </div>
         <canvas id="dogeGroupedBarChart"></canvas>
         {loadingGrouped ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+          <div className="dogeloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          groupedInsights && validGroupedBarInsights.length > 0 && groupedQuery !== 'full_metrics_grouped' &&  (
+            <div className="dogechart-details">
+              <div key={currentGroupedBarInsight} className="dogechart-item">
+                <div className="dogechart-header">
+                  <span>{currentGroupedBarInsight + 1}. </span>
+                </div>
+                <div className="dogechart-content">
+                  {groupedBarInsightContent ? groupedBarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="dogeinsight-navigation">
+                  <span className="dogenav-arrow" onClick={handlePrevGroupedBarInsight}>{'<'}</span>
+                  <span className="dogenav-arrow" onClick={handleNextGroupedBarInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      groupedInsights && (
-        <div className="dogechart-details">
-          <p>{groupedInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
       {/* Stacked Chart */}
-      <div className="dogechart-wrapper stacked">
+      <div className="dogechart-wrapper bar">
         <div className="dogechart-header">
           <h2>Stacked Chart for Dogecoin Metrics</h2>
           {stackedQuery === 'full_metrics_stacked' && (
-          <span className="dogeinfo-icon" title="More Information">🤔</span> 
+            <span className="dogeinfo-icon" title="More Information"></span>
           )}
         </div>
         <canvas id="dogeStackedBarChart"></canvas>
         {loadingStacked ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
-      </div>
-    ) : (
-      stackedInsights && (
-        <div className="dogechart-details">
-          <p>{stackedInsights}</p>
-        </div>
-      )
-    )}
+          <div className="dogeloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          stackedInsights && validStackedInsights.length > 0 && groupedQuery !== 'full_metrics_grouped' &&  (
+            <div className="dogechart-details">
+              <div key={currentStackedInsight} className="dogechart-item">
+                <div className="dogechart-header">
+                  <span>{currentStackedInsight + 1}. </span>
+                </div>
+                <div className="dogechart-content">
+                  {stackedInsightContent ? stackedInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="dogeinsight-navigation">
+                  <span className="dogenav-arrow" onClick={handlePrevStackedInsight}>{'<'}</span>
+                  <span className="dogenav-arrow" onClick={handleNextStackedInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
     </div>
   </div>

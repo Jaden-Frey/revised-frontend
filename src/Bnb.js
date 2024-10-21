@@ -974,6 +974,82 @@ const handleScatterQuery = (query) => {
  const toggleCombinedChartInfo = () => setShowCombinedChartInfo((prev) => !prev);
  const togglePolarChartInfo = () => setShowPolarChartInfo((prev) => !prev);
 
+ // State for Polar Chart Insights
+ const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+ const [polarInsightContent, setPolarInsightContent] = useState(null);
+ const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+ }, [currentPolarInsight, validPolarInsights]);
+
+ const handleNextPolarInsight = () => {
+   const nextIndex = currentPolarInsight + 1;
+   setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevPolarInsight = () => {
+   const prevIndex = currentPolarInsight - 1;
+   setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+ };
+
+ // State for Scatter Chart Insights
+ const [currentScatterInsight, setCurrentScatterInsight] = useState(0);
+ const [scatterInsightContent, setScatterInsightContent] = useState(null);
+ const validScatterInsights = scatterInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setScatterInsightContent(validScatterInsights.length > 0 ? validScatterInsights[currentScatterInsight] : null);
+ }, [currentScatterInsight, validScatterInsights]);
+
+ const handleNextScatterInsight = () => {
+   const nextIndex = currentScatterInsight + 1;
+   setCurrentScatterInsight(nextIndex >= validScatterInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevScatterInsight = () => {
+   const prevIndex = currentScatterInsight - 1;
+   setCurrentScatterInsight(prevIndex < 0 ? validScatterInsights.length - 1 : prevIndex);
+ };
+
+ // State for Line Chart Insights
+ const [currentLineInsight, setCurrentLineInsight] = useState(0);
+ const [lineInsightContent, setLineInsightContent] = useState(null);
+ const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+ }, [currentLineInsight, validLineInsights]);
+
+ const handleNextLineInsight = () => {
+   const nextIndex = currentLineInsight + 1;
+   setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevLineInsight = () => {
+   const prevIndex = currentLineInsight - 1;
+   setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+ };
+
+ // State for Combined Chart Insights
+const [currentCombinedInsight, setCurrentCombinedInsight] = useState(0);
+const [combinedInsightContent, setCombinedInsightContent] = useState(null);
+const validCombinedInsights = priceChangeInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setCombinedInsightContent(validCombinedInsights.length > 0 ? validCombinedInsights[currentCombinedInsight] : null);
+}, [currentCombinedInsight, validCombinedInsights]);
+
+const handleNextCombinedInsight = () => {
+  const nextIndex = currentCombinedInsight + 1;
+  setCurrentCombinedInsight(nextIndex >= validCombinedInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevCombinedInsight = () => {
+  const prevIndex = currentCombinedInsight - 1;
+  setCurrentCombinedInsight(prevIndex < 0 ? validCombinedInsights.length - 1 : prevIndex);
+}; 
+
   return (
     <div className="bnbpage-wrapper">
   <h1 className="page-title">BNB Visualization's</h1>
@@ -984,30 +1060,30 @@ const handleScatterQuery = (query) => {
   <div className="bnbchart-container">
     <div className="bnbquery-container">
       <select value={lineQuery} onChange={handleLineQueryChange}>
-        <option value="" hidden>📉 Select Line Chart Option</option>
+        <option value="" hidden>📉 Line Chart </option>
         <option value="market_cap_vs_circulating_supply"> 📉 Market Cap vs. Circulating Supply</option>
-        <option value="full_metrics_line"> 📉 All Line Metrics</option>
+        <option value="full_metrics_line"> 📉 Reset </option>
       </select>
     </div>
     <div className="bnbquery-container">
       <select value={combinedQuery} onChange={handleCombinedQueryChange}>
-        <option value="" hidden>🚀 Select Combined Chart Option</option>
+        <option value="" hidden>🚀 Combined Chart </option>
         <option value="market_cap_vs_volume_market_cap_change"> 🚀 Market Cap / Change vs. Volume</option>
-        <option value="full_metrics_combined"> 🚀 All Combined Metrics</option>
+        <option value="full_metrics_combined"> 🚀 Reset </option>
       </select>
     </div>
     <div className="bnbquery-container">
       <select value={polarQuery} onChange={handlePolarQueryChange}>
-        <option value="" hidden>❄️ Select Polar Chart Option</option>
+        <option value="" hidden>❄️ Polar Chart </option>
         <option value="market_cap_vs_volume"> ❄️ Market Cap vs. Volume</option>
-        <option value="full_metrics_polar"> ❄️ All Polar Metrics</option>
+        <option value="full_metrics_polar"> ❄️ Reset </option>
       </select>
     </div>
     <div className="bnbquery-container">
       <select value={scatterQuery} onChange={handleScatterQueryChange}>
-        <option value="" hidden>🌍 Select Scatter Chart Option</option>
+        <option value="" hidden>🌍 Scatter Chart </option>
         <option value="market_cap_vs_volume_vs_price"> 🌍 Market Cap vs. Volume vs. Price</option>
-        <option value="full_metrics_scatter"> 🌍 All Scatter Metrics</option>
+        <option value="full_metrics_scatter"> 🌍 Reset </option>
       </select>
     </div>
   </div>
@@ -1021,92 +1097,137 @@ const handleScatterQuery = (query) => {
         <canvas id="bnbHeatmapChart"></canvas>
     </div>
 
-<div className="bnbchart-wrapper combine">
+{/* Polar Area Chart for BNB KPIs */}
+<div className="bnbchart-wrapper bar">
   <div className="bnbchart-header">
     <h2>Polar Area Chart for BNB KPIs</h2>
     {polarQuery === 'market_cap_vs_volume' && (
-        <span className="bnbinfo-icon" title="More Information">🤔</span> 
-     )}
+      <span className="bnbinfo-icon" title="More Information">🤔</span> 
+    )}
   </div>
   <canvas id="bnbPolarAreaChart"></canvas>
   {loadingPolar ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          polarInsights && (
-            <div className="bnbchart-details">
-              <p>{polarInsights}</p>
-            </div>
-          )
-        )}
+    <div className="bnbloading-indicator">
+      Fetching insights<LoadingEllipsis />
     </div>
+  ) : (
+    polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
+      <div className="bnbchart-details">
+        <div key={currentPolarInsight} className="bnbchart-item">
+          <div className="bnbchart-header">
+            <span>{currentPolarInsight + 1}. </span>
+          </div>
+          <div className="bnbchart-content">
+            {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="bnbinsight-navigation">
+            <span className="bnbnav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+            <span className="bnbnav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+          </div>
+        </div>
+      </div>
+    )
+  )}
+</div>
 
-    {/* Scatter Chart */}
-<div className="bnbchart-wrapper combine">
+{/* Scatter Chart for BNB Metrics */}
+<div className="bnbchart-wrapper bar">
   <div className="bnbchart-header">
     <h2>Scatterplot Chart for BNB Metrics</h2>
     {scatterQuery === 'market_cap_vs_volume_vs_price' && (
-        <span className="bnbinfo-icon" title="More Information">🤔</span> 
-     )}
+      <span className="bnbinfo-icon" title="More Information">🤔</span> 
+    )}
   </div>
   <canvas id="bnbScatterChart"></canvas>
   {loadingScatter ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          scatterInsights && (
-            <div className="bnbchart-details">
-              <p>{scatterInsights}</p>
-            </div>
-          )
-        )}
+    <div className="bnbloading-indicator">
+      Fetching insights<LoadingEllipsis />
     </div>
+  ) : (
+    scatterInsights && validScatterInsights.length > 0 && scatterQuery !== 'full_metrics_scatter' && (
+      <div className="bnbchart-details">
+        <div key={currentScatterInsight} className="bnbchart-item">
+          <div className="bnbchart-header">
+            <span>{currentScatterInsight + 1}. </span>
+          </div>
+          <div className="bnbchart-content">
+            {scatterInsightContent ? scatterInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="bnbinsight-navigation">
+            <span className="bnbnav-arrow" onClick={handlePrevScatterInsight}>{'<'}</span>
+            <span className="bnbnav-arrow" onClick={handleNextScatterInsight}>{'>'}</span>
+          </div>
+        </div>
+      </div>
+    )
+  )}
+</div>
 
-{/* Line Graph */}
-<div className="bnbchart-wrapper combine">
+{/* Line Graph for BNB Metrics */}
+<div className="bnbchart-wrapper bar">
   <div className="bnbchart-header">
     <h2>Line Graph for BNB Metrics</h2>
     {lineQuery === 'market_cap_vs_circulating_supply' && (
-        <span className="bnbinfo-icon" title="More Information">🤔</span> 
-     )}
+      <span className="bnbinfo-icon" title="More Information">🤔</span> 
+    )}
   </div>
   <canvas id="bnbLineChart"></canvas>
   {loadingLine ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          lineInsights && (
-            <div className="bnbchart-details">
-              <p>{lineInsights}</p>
-            </div>
-          )
-        )}
+    <div className="bnbloading-indicator">
+      Fetching insights<LoadingEllipsis />
     </div>
+  ) : (
+    lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
+      <div className="bnbchart-details">
+        <div key={currentLineInsight} className="bnbchart-item">
+          <div className="bnbchart-header">
+            <span>{currentLineInsight + 1}. </span>
+          </div>
+          <div className="bnbchart-content">
+            {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="bnbinsight-navigation">
+            <span className="bnbnav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+            <span className="bnbnav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+          </div>
+        </div>
+      </div>
+    )
+  )}
+</div>
 
-{/* Combined Chart */}
-<div className="bnbchart-wrapper combine">
+{/* Combined Bar and Line Chart for BNB Metrics */}
+<div className="bnbchart-wrapper bar">
   <div className="bnbchart-header">
     <h2>Combined Bar and Line Graph Representing BNB's Market Volatility</h2>
-    {(combinedQuery === 'market_cap_vs_volume_market_cap_change') && (
+    {combinedQuery === 'market_cap_vs_volume_market_cap_change' && (
       <span className="bnbinfo-icon" title="More Information">🤔</span> 
     )}
   </div>
   <canvas id="bnbCombinedChart"></canvas>
   {loadingPriceChange ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
+    <div className="bnbloading-indicator">
+      Fetching insights<LoadingEllipsis />
+    </div>
+  ) : (
+    priceChangeInsights && validCombinedInsights.length > 0 && combinedQuery !== 'full_metrics_combined' && (
+      <div className="bnbchart-details">
+        <div key={currentCombinedInsight} className="bnbchart-item">
+          <div className="bnbchart-header">
+            <span>{currentCombinedInsight + 1}. </span>
           </div>
-        ) : (
-          priceChangeInsights && (
-            <div className="tetherchart-details">
-              <p>{priceChangeInsights}</p>
-            </div>
-          )
-        )}
+          <div className="bnbchart-content">
+            {combinedInsightContent ? combinedInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="bnbinsight-navigation">
+            <span className="bnbnav-arrow" onClick={handlePrevCombinedInsight}>{'<'}</span>
+            <span className="bnbnav-arrow" onClick={handleNextCombinedInsight}>{'>'}</span>
+          </div>
+        </div>
       </div>
+    )
+  )}
+</div>
     </div>
 </div>
   );

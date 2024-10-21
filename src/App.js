@@ -12,45 +12,10 @@ import Xrp from "./Xrp";
 import Doge from "./Doge";
 import Cardano from "./Cardano";
 import Polkadot from "./Polkadot";
-// import ProtectedRoute from "./ProtectedRoute"; 
-//import Spinner from "./Spinner";
 import IconComponent from "./IconBackground";
 import "./Questionmark.css";
 
 function App() {
-  /* const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false); 
-
-  // Function to check authentication status - Commented out to bypass auth
-  const checkAuthentication = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/auth/check', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setAuthenticated(data.authenticated); 
-      } else {
-        setAuthenticated(false); 
-      }
-    } catch (error) {
-      console.error('Error checking authentication:', error);
-      setAuthenticated(false); 
-    } finally {
-      setLoading(false); 
-    }
-  };
-
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
-
-  if (loading) {
-    return <Spinner />;
-  } */
-
   return (
     <Router>
       <div className="App">

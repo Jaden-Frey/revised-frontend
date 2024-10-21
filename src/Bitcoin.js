@@ -864,6 +864,10 @@ const handleLineQueryChange = (e) => {
   handleLineQuery(query);
   handleFilterChange(query);
   setShowLineChartInfo(query === 'market_cap_vs_circulating_supply');
+
+  if (query === 'full_metrics_line') {
+    setShowLineChartInfo(false);
+  }
 };
 
 const handleBarQueryChange = (e) => {
@@ -872,6 +876,10 @@ const handleBarQueryChange = (e) => {
   handleBarChartQuery(query);
   handleFilterChange(query);
   setShowWaterfallBarChartInfo(query === 'valuation_metrics');
+
+  if (query === 'full_metrics_bar') {
+    setShowWaterfallBarChartInfo(false);
+  }
 };
 
 const handlePolarOrDoughnutQueryChange = (e) => {
@@ -887,6 +895,12 @@ const handlePolarOrDoughnutQueryChange = (e) => {
     handlePolarQuery(query);
     handleFilterChange(query);
     setShowPolarChartInfo(query === 'market_cap_vs_volume');
+    setShowDoughnutChartInfo(false);
+  }
+
+  if (query === 'full_metrics_polar' || query === 'full_metrics_doughnut') {
+    setShowPolarChartInfo(false);
+    setShowDoughnutChartInfo(false);
   }
 };
 
@@ -896,6 +910,10 @@ const handleScatterQueryChange = (e) => {
   handleScatterQuery(query);
   handleFilterChange(query);
   setShowScatterChartInfo(query === 'market_cap_vs_volume_vs_price');
+
+  if (query === 'full_metrics_scatter') {
+    setShowScatterChartInfo(false);
+  }
 };
 
 const toggleScatterChartInfo = () => setShowScatterChartInfo((prev) => !prev);
@@ -903,6 +921,102 @@ const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
 const toggleWaterfallBarChartInfo = () => setShowWaterfallBarChartInfo((prev) => !prev);
 const togglePolarChartInfo = () => setShowPolarChartInfo((prev) => !prev);
 const toggleDoughnutChartInfo = () => setShowDoughnutChartInfo((prev) => !prev);
+
+ // State for Polar Chart Insights
+ const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+ const [polarInsightContent, setPolarInsightContent] = useState(null);
+ const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+ }, [currentPolarInsight, validPolarInsights]);
+
+ const handleNextPolarInsight = () => {
+   const nextIndex = currentPolarInsight + 1;
+   setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevPolarInsight = () => {
+   const prevIndex = currentPolarInsight - 1;
+   setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+ };
+
+ // State for Doughnut Chart Insights
+ const [currentDoughnutInsight, setCurrentDoughnutInsight] = useState(0);
+ const [doughnutInsightContent, setDoughnutInsightContent] = useState(null);
+ const validDoughnutInsights = doughnutInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setDoughnutInsightContent(validDoughnutInsights.length > 0 ? validDoughnutInsights[currentDoughnutInsight] : null);
+ }, [currentDoughnutInsight, validDoughnutInsights]);
+
+ const handleNextDoughnutInsight = () => {
+   const nextIndex = currentDoughnutInsight + 1;
+   setCurrentDoughnutInsight(nextIndex >= validDoughnutInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevDoughnutInsight = () => {
+   const prevIndex = currentDoughnutInsight - 1;
+   setCurrentDoughnutInsight(prevIndex < 0 ? validDoughnutInsights.length - 1 : prevIndex);
+ };
+
+ // State for Scatter Chart Insights
+ const [currentScatterInsight, setCurrentScatterInsight] = useState(0);
+ const [scatterInsightContent, setScatterInsightContent] = useState(null);
+ const validScatterInsights = scatterInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setScatterInsightContent(validScatterInsights.length > 0 ? validScatterInsights[currentScatterInsight] : null);
+ }, [currentScatterInsight, validScatterInsights]);
+
+ const handleNextScatterInsight = () => {
+   const nextIndex = currentScatterInsight + 1;
+   setCurrentScatterInsight(nextIndex >= validScatterInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevScatterInsight = () => {
+   const prevIndex = currentScatterInsight - 1;
+   setCurrentScatterInsight(prevIndex < 0 ? validScatterInsights.length - 1 : prevIndex);
+ };
+
+ // State for Line Chart Insights
+ const [currentLineInsight, setCurrentLineInsight] = useState(0);
+ const [lineInsightContent, setLineInsightContent] = useState(null);
+ const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+ }, [currentLineInsight, validLineInsights]);
+
+ const handleNextLineInsight = () => {
+   const nextIndex = currentLineInsight + 1;
+   setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevLineInsight = () => {
+   const prevIndex = currentLineInsight - 1;
+   setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+ };
+
+ // State for Waterfall Bar Chart Insights
+ const [currentWaterfallBarInsight, setCurrentWaterfallBarInsight] = useState(0);
+ const [waterfallBarInsightContent, setWaterfallBarInsightContent] = useState(null);
+ const validWaterfallBarInsights = waterfallBarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setWaterfallBarInsightContent(validWaterfallBarInsights.length > 0 ? validWaterfallBarInsights[currentWaterfallBarInsight] : null);
+ }, [currentWaterfallBarInsight, validWaterfallBarInsights]);
+
+ const handleNextWaterfallBarInsight = () => {
+   const nextIndex = currentWaterfallBarInsight + 1;
+   setCurrentWaterfallBarInsight(nextIndex >= validWaterfallBarInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevWaterfallBarInsight = () => {
+   const prevIndex = currentWaterfallBarInsight - 1;
+   setCurrentWaterfallBarInsight(prevIndex < 0 ? validWaterfallBarInsights.length - 1 : prevIndex);
+ };
+
 
 return (
   <div className="bitcoinpage-wrapper">
@@ -915,18 +1029,18 @@ return (
         {/* Line Chart Dropdown */}
         <div className="bitcoinquery-container">
           <select value={lineQuery} onChange={handleLineQueryChange}>
-            <option value="" hidden>📉 Select Line Chart Option</option>
+            <option value="" hidden>📉 Line Chart </option>
             <option value="market_cap_vs_circulating_supply">📉 Market Cap vs. Circulating Supply</option>
-            <option value="full_metrics_line">📉 All Line Metrics</option>
+            <option value="full_metrics_line">📉 Reset </option>
           </select>
         </div>
 
         {/* Bar Chart Dropdown */}
         <div className="bitcoinquery-container">
           <select value={barQuery} onChange={handleBarQueryChange}>
-            <option value="" hidden>📊 Select Waterfall Bar Chart Option</option>
+            <option value="" hidden>📊 Waterfall Bar Chart </option>
             <option value="valuation_metrics">📊 Performance Metrics</option>
-            <option value="full_metrics_bar">📊 All Waterfall Bar Metrics</option>
+            <option value="full_metrics_bar">📊 Reset </option>
           </select>
         </div>
 
@@ -936,136 +1050,200 @@ return (
             value={polarQuery || doughnutQuery} 
             onChange={handlePolarOrDoughnutQueryChange}
           >
-            <option value="" hidden>❄️🍩 Select Polar or Doughnut Chart Option</option>
+            <option value="" hidden>❄️🍩 Polar / Doughnut Chart</option>
             <option value="market_cap_vs_volume">❄️ Market Cap vs. Volume</option>
-            <option value="full_metrics_polar">❄️ All Polar Metrics</option>
-            <option value="full_metrics_doughnut">🍩 All Doughnut Metrics</option>
+            <option value="full_metrics_polar">❄️🍩 Reset </option>
+            <option value="full_metrics_doughnut">🍩 Doughnut Metrics</option>
           </select>
         </div>
 
         {/* Scatter Chart Dropdown */}
         <div className="bitcoinquery-container">
           <select value={scatterQuery} onChange={handleScatterQueryChange}>
-            <option value="" hidden>🌍 Select Scatter Chart Option</option>
+            <option value="" hidden>🌍 Scatter Chart</option>
             <option value="market_cap_vs_volume_vs_price">🌍 Market Cap vs. Volume vs. Price</option>
-            <option value="full_metrics_scatter">🌍 All Scatter Metrics</option>
+            <option value="full_metrics_scatter">🌍 Reset </option>
           </select>
         </div>
       </div>
 
-
-      <div className="bitcoinchart-container">
-        {/* Polar Area Chart */}
-        <div className="bitcoinchart-wrapper bar">
-          <div className="bitcoinchart-header">
-            <h2>Polar Area Chart for Bitcoin KPIs</h2>
-            {polarQuery === 'market_cap_vs_volume' && (
-              <span className="bitcoininfo-icon" title="More Information">🤔</span>
-            )}
-          </div>
-          <canvas id="btcPolarAreaChart"></canvas>
-          {loadingPolar ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          polarInsights && (
-            <div className="bitcoinchart-details">
-              <p>{polarInsights}</p>
-            </div>
-          )
-        )}
+<div className="bitcoinchart-container">
+  
+ {/* Polar Area Chart */}
+<div className="bitcoinchart-wrapper bar">
+  <div className="bitcoinchart-header">
+    <h2>Polar Area Chart for Bitcoin KPIs</h2>
+    {polarQuery === 'market_cap_vs_volume' && (
+      <span className="bitcoininfo-icon" title="More Information">🤔</span>
+    )}
+  </div>
+  <canvas id="btcPolarAreaChart"></canvas>
+  {loadingPolar ? (
+    <div className="bitcoinloading-indicator">
+      Fetching insights<LoadingEllipsis />
     </div>
-
-        {/* Doughnut Chart */}
-        <div className="bitcoinchart-wrapper bar">
+  ) : (
+    polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (  // Only show insights if not resetting
+      <div className="bitcoinchart-details">
+        <div key={currentPolarInsight} className="bitcoinchart-item">
           <div className="bitcoinchart-header">
-            <h2>Doughnut Chart for Bitcoin Metrics</h2>
-            {doughnutQuery === 'full_metrics_doughnut' && (
-              <span className="bitcoininfo-icon" title="More Information">🤔</span>
-            )}
+            <span>{currentPolarInsight + 1}. </span>
           </div>
-          <canvas id="btcDoughnutChart"></canvas>
-          {loadingDoughnut ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
+          <div className="bitcoinchart-content">
+            {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
           </div>
-        ) : (
-          doughnutInsights && (
-            <div className="bitcoinchart-details">
-              <p>{doughnutInsights}</p>
-            </div>
-          )
-        )}
-    </div>
-
-        {/* Scatter Chart */}
-        <div className="bitcoinchart-wrapper bar">
-          <div className="bitcoinchart-header">
-            <h2>Scatterplot Chart for Bitcoin Metrics</h2>
-            {scatterQuery === 'market_cap_vs_volume_vs_price' && (
-              <span className="bitcoininfo-icon" title="More Information">🤔</span>
-            )}
+          <div className="bitcoininsight-navigation">
+            <span className="bitcoinnav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+            <span className="bitcoinnav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
           </div>
-          <canvas id="btcScatterChart"></canvas>
-          {loadingScatter ? (
-          <div className="loading-indicator"> 
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          scatterInsights && (
-            <div className="bitcoinchart-details">
-              <p>{scatterInsights}</p>
-            </div>
-          )
-        )}
-    </div>
-
-        {/* Line Chart */}
-        <div className="bitcoinchart-wrapper bar">
-          <div className="bitcoinchart-header">
-            <h2>Line Graph for Bitcoin Metrics</h2>
-            {lineQuery === 'market_cap_vs_circulating_supply' && (
-              <span className="bitcoininfo-icon" title="More Information">🤔</span>
-            )}
-          </div>
-          <canvas id="btcLineChart"></canvas>
-          {loadingLine ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          lineInsights && (
-            <div className="bitcoinchart-details">
-              <p>{lineInsights}</p>
-            </div>
-          )
-        )}
-    </div>
-
-        {/* Waterfall Bar Chart */}
-        <div className="bitcoinchart-wrapper bar">
-          <div className="bitcoinchart-header">
-            <h2>Waterfall Bar Chart for Bitcoin Metrics</h2>
-            {barQuery === 'valuation_metrics' && (
-              <span className="bitcoininfo-icon" title="More Information">🤔</span>
-            )}
-          </div>
-          <canvas id="btcWaterfallBarChart"></canvas>
-          {loadingWaterfall ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          waterfallBarInsights && (
-            <div className="bitcoinchart-details">
-              <p>{waterfallBarInsights}</p>
-            </div>
-          )
-        )}
         </div>
       </div>
+    )
+  )}
+</div>
+
+  {/* Doughnut Chart */}
+  <div className="bitcoinchart-wrapper bar">
+    <div className="bitcoinchart-header">
+      <h2>Doughnut Chart for Bitcoin Metrics</h2>
+      {doughnutQuery === 'full_metrics_doughnut' && polarQuery !== 'full_metrics_polar' && (
+        <span className="bitcoininfo-icon" title="More Information"></span>
+      )}
     </div>
+    <canvas id="btcDoughnutChart"></canvas>
+    {loadingDoughnut ? (
+      <div className="bitcoinloading-indicator">
+        Fetching insights<LoadingEllipsis />
+      </div>
+    ) : (
+      doughnutInsights && validDoughnutInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
+        <div className="bitcoinchart-details">
+          {validDoughnutInsights.length > 0 ? (
+            <div key={currentDoughnutInsight} className="bitcoinchart-item">
+              <div className="bitcoinchart-header">
+                <span>{currentDoughnutInsight + 1}. </span>
+              </div>
+              <div className="bitcoinchart-content">
+                {doughnutInsightContent ? doughnutInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+              </div>
+              <div className="bitcoininsight-navigation">
+                <span className="bitcoinnav-arrow" onClick={handlePrevDoughnutInsight}>{'<'}</span>
+                <span className="bitcoinnav-arrow" onClick={handleNextDoughnutInsight}>{'>'}</span>
+              </div>
+            </div>
+          ) : (
+            <p>No insights available</p>
+          )}
+        </div>
+      )
+    )}
+  </div>
+
+  {/* Scatter Chart */}
+  <div className="bitcoinchart-wrapper bar">
+    <div className="bitcoinchart-header">
+      <h2>Scatterplot Chart for Bitcoin Metrics</h2>
+      {scatterQuery === 'market_cap_vs_volume_vs_price' && (
+        <span className="bitcoininfo-icon" title="More Information">🤔</span>
+      )}
+    </div>
+    <canvas id="btcScatterChart"></canvas>
+    {loadingScatter ? (
+      <div className="bitcoinloading-indicator">
+        Fetching insights<LoadingEllipsis />
+      </div>
+    ) : (
+      scatterInsights && validScatterInsights.length > 0 && scatterQuery !== 'full_metrics_scatter' && (
+        <div className="bitcoinchart-details">
+          {validScatterInsights.length > 0 ? (
+            <div key={currentScatterInsight} className="bitcoinchart-item">
+              <div className="bitcoinchart-header">
+                <span>{currentScatterInsight + 1}. </span>
+              </div>
+              <div className="bitcoinchart-content">
+                {scatterInsightContent ? scatterInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+              </div>
+              <div className="bitcoininsight-navigation">
+                <span className="bitcoinnav-arrow" onClick={handlePrevScatterInsight}>{'<'}</span>
+                <span className="bitcoinnav-arrow" onClick={handleNextScatterInsight}>{'>'}</span>
+              </div>
+            </div>
+          ) : (
+            <p>No insights available</p>
+          )}
+        </div>
+      )
+    )}
+  </div>
+
+  {/* Line Chart */}
+<div className="bitcoinchart-wrapper bar">
+  <div className="bitcoinchart-header">
+    <h2>Line Graph for Bitcoin Metrics</h2>
+    {lineQuery === 'market_cap_vs_circulating_supply' && (
+      <span className="bitcoininfo-icon" title="More Information">🤔</span>
+    )}
+  </div>
+  <canvas id="btcLineChart"></canvas>
+  {loadingLine ? (
+    <div className="bitcoinloading-indicator">
+      Fetching insights<LoadingEllipsis />
+    </div>
+  ) : (
+    lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (  // Only show insights if not resetting
+      <div className="bitcoinchart-details">
+        <div key={currentLineInsight} className="bitcoinchart-item">
+          <div className="bitcoinchart-header">
+            <span>{currentLineInsight + 1}. </span>
+          </div>
+          <div className="bitcoinchart-content">
+            {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="bitcoininsight-navigation">
+            <span className="bitcoinnav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+            <span className="bitcoinnav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+          </div>
+        </div>
+      </div>
+    )
+  )}
+</div>
+
+  {/* Waterfall Bar Chart */}
+<div className="bitcoinchart-wrapper bar">
+  <div className="bitcoinchart-header">
+    <h2>Waterfall Bar Chart for Bitcoin Metrics</h2>
+    {barQuery === 'valuation_metrics' && (
+      <span className="bitcoininfo-icon" title="More Information">🤔</span>
+    )}
+  </div>
+  <canvas id="btcWaterfallBarChart"></canvas>
+  {loadingWaterfall ? (
+    <div className="bitcoinloading-indicator">
+      Fetching insights<LoadingEllipsis />
+    </div>
+  ) : (
+    waterfallBarInsights && validWaterfallBarInsights.length > 0 && barQuery !== 'full_metrics_bar' && (  // Only show insights if not resetting
+      <div className="bitcoinchart-details">
+        <div key={currentWaterfallBarInsight} className="bitcoinchart-item">
+          <div className="bitcoinchart-header">
+            <span>{currentWaterfallBarInsight + 1}. </span>
+          </div>
+          <div className="bitcoinchart-content">
+            {waterfallBarInsightContent ? waterfallBarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="bitcoininsight-navigation">
+            <span className="bitcoinnav-arrow" onClick={handlePrevWaterfallBarInsight}>{'<'}</span>
+            <span className="bitcoinnav-arrow" onClick={handleNextWaterfallBarInsight}>{'>'}</span>
+          </div>
+        </div>
+      </div>
+    )
+  )}
+  </div>
+</div>
+
+</div>
   );
 };
 

@@ -743,6 +743,82 @@ const toggleWaterfallBarChartInfo = () => setShowWaterfallBarChartInfo((prev) =>
 const togglePolarChartInfo = () => setShowPolarChartInfo((prev) => !prev);
 const toggleRadarChartInfo = () => setShowRadarChartInfo((prev) => !prev);
 
+// State for Polar Chart Insights
+const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+const [polarInsightContent, setPolarInsightContent] = useState(null);
+const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+}, [currentPolarInsight, validPolarInsights]);
+
+const handleNextPolarInsight = () => {
+  const nextIndex = currentPolarInsight + 1;
+  setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevPolarInsight = () => {
+  const prevIndex = currentPolarInsight - 1;
+  setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+};
+
+// State for Waterfall Bar Chart Insights
+const [currentWaterfallBarInsight, setCurrentWaterfallBarInsight] = useState(0);
+const [waterfallBarInsightContent, setWaterfallBarInsightContent] = useState(null);
+const validWaterfallBarInsights = waterfallInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setWaterfallBarInsightContent(validWaterfallBarInsights.length > 0 ? validWaterfallBarInsights[currentWaterfallBarInsight] : null);
+}, [currentWaterfallBarInsight, validWaterfallBarInsights]);
+
+const handleNextWaterfallBarInsight = () => {
+  const nextIndex = currentWaterfallBarInsight + 1;
+  setCurrentWaterfallBarInsight(nextIndex >= validWaterfallBarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevWaterfallBarInsight = () => {
+  const prevIndex = currentWaterfallBarInsight - 1;
+  setCurrentWaterfallBarInsight(prevIndex < 0 ? validWaterfallBarInsights.length - 1 : prevIndex);
+};
+
+// State for Line Chart Insights
+const [currentLineInsight, setCurrentLineInsight] = useState(0);
+const [lineInsightContent, setLineInsightContent] = useState(null);
+const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+}, [currentLineInsight, validLineInsights]);
+
+const handleNextLineInsight = () => {
+  const nextIndex = currentLineInsight + 1;
+  setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevLineInsight = () => {
+  const prevIndex = currentLineInsight - 1;
+  setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+};
+
+// State for Radar Chart Insights
+const [currentRadarInsight, setCurrentRadarInsight] = useState(0);
+const [radarInsightContent, setRadarInsightContent] = useState(null);
+const validRadarInsights = radarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+ setRadarInsightContent(validRadarInsights.length > 0 ? validRadarInsights[currentRadarInsight] : null);
+}, [currentRadarInsight, validRadarInsights]);
+
+const handleNextRadarInsight = () => {
+ const nextIndex = currentRadarInsight + 1;
+ setCurrentRadarInsight(nextIndex >= validRadarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevRadarInsight = () => {
+ const prevIndex = currentRadarInsight - 1;
+ setCurrentRadarInsight(prevIndex < 0 ? validRadarInsights.length - 1 : prevIndex);
+};
+
 return (
   <div className="usdcpage-wrapper">
     <h1 className="page-title">USDC Visualization's</h1>
@@ -754,9 +830,9 @@ return (
       {/* Query Selectors */}
       <div className="usdcquery-container">
         <select value={lineQuery} onChange={handleLineQueryChange}>
-          <option value="" hidden>📉 Select Line Chart Option</option>
+          <option value="" hidden>📉 Line Chart </option>
           <option value="market_cap_vs_total_volume"> 📉 Market Cap vs. Total Volume </option>
-          <option value="full_metrics_line"> 📉 All Line Metrics </option>
+          <option value="full_metrics_line"> 📉 Reset </option>
         </select>
       </div>
   
@@ -765,18 +841,18 @@ return (
             value={polarQuery || radarQuery} 
             onChange={handlePolarOrRadarQueryChange}
           >
-            <option value="" hidden>❄️📡 Select Polar or Doughnut Chart Option</option>
+            <option value="" hidden>❄️📡 Polar / Doughnut Chart </option>
             <option value="market_cap_vs_circulating_supply">❄️ Market Cap vs. Circulating Supply</option>
-            <option value="full_metrics_polar">❄️ All Polar Metrics</option>
-            <option value="full_metrics_radar">📡 All Radar Metrics</option>
+            <option value="full_metrics_polar">❄️📡 Reset </option>
+            <option value="full_metrics_radar">📡 Radar Metrics</option>
           </select>
         </div>
 
       <div className="usdcquery-container">
         <select value={barQuery} onChange={handleBarQueryChange}>
-          <option value="" hidden>📊 Select Waterfall Bar Chart Option</option>
+          <option value="" hidden>📊 Waterfall Bar Chart </option>
           <option value="valuation_metrics"> 📊 Performance Metrics </option>
-          <option value="full_metrics_bar"> 📊 All Waterfall Bar Metrics </option>
+          <option value="full_metrics_bar"> 📊 Reset </option>
         </select>
       </div>
 
@@ -789,92 +865,128 @@ return (
     </div>
 
       {/* Polar Area Chart */}
-      <div className="usdcchart-wrapper line">
-        <div className="usdcchart-header">
-          <h2>Polar Area Chart for USDC KPIs</h2>
-          {polarQuery === 'market_cap_vs_circulating_supply' && (
-          <span className="usdcinfo-icon" title="More Information">🤔</span> 
-          )}
-        </div>
-        <canvas id="usdcPolarAreaChart"></canvas>
-        {loadingPolar ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
+  <div className="usdcchart-wrapper bar">
+  <div className="usdcchart-header">
+    <h2>Polar Area Chart for USDC Metrics</h2>
+    {polarQuery === 'market_cap_vs_circulating_supply' && (
+      <span className="usdcinfo-icon" title="More Information">🤔</span>
+    )}
+  </div>
+  <canvas id="usdcPolarAreaChart"></canvas>
+  {loadingPolar ? (
+    <div className="usdcloading-indicator">Fetching insights<LoadingEllipsis /></div>
+  ) : (
+    polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
+      <div className="usdcchart-details">
+        <div key={currentPolarInsight} className="usdcchart-item">
+          <div className="usdcchart-header">
+            <span>{currentPolarInsight + 1}. </span>
           </div>
-        ) : (
-          polarInsights && (
-            <div className="usdcchart-details">
-              <p>{polarInsights}</p>
-            </div>
-          )
-        )}
+          <div className="usdcchart-content">
+            {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="usdcinsight-navigation">
+            <span className="usdcnav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+            <span className="usdcnav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+          </div>
+        </div>
       </div>
+    )
+  )}
+</div>
 
       {/* Radar Chart */}
-      <div className="usdcchart-wrapper line">
-        <div className="usdcchart-header">
-          <h2>Radar Chart for USDC Metrics</h2>
-          {radarQuery === 'full_metrics_radar' && (
-          <span className="usdcinfo-icon" title="More Information">🤔</span> 
-          )}
+<div className="usdcchart-wrapper bar">
+  <div className="usdcchart-header">
+    <h2>Radar Chart for USDC Metrics</h2>
+    {radarQuery === 'full_metrics_radar' && (
+      <span className="usdcinfo-icon" title="More Information"></span>
+    )}
+  </div>
+  <canvas id="usdcRadarChart"></canvas>
+  {loadingRadar ? (
+    <div className="usdcloading-indicator">Fetching insights<LoadingEllipsis /></div>
+  ) : (
+    radarInsights && validRadarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
+      <div className="usdcchart-details">
+        <div key={currentRadarInsight} className="usdcchart-item">
+          <div className="usdcchart-header">
+            <span>{currentRadarInsight + 1}. </span>
+          </div>
+          <div className="usdcchart-content">
+            {radarInsightContent ? radarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="usdcinsight-navigation">
+            <span className="usdcnav-arrow" onClick={handlePrevRadarInsight}>{'<'}</span>
+            <span className="usdcnav-arrow" onClick={handleNextRadarInsight}>{'>'}</span>
+          </div>
         </div>
-        <canvas id="usdcRadarChart"></canvas>
-        {loadingRadar ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          radarInsights && (
-            <div className="usdcchart-details">
-              <p>{radarInsights}</p>
-            </div>
-          )
-        )}
       </div>
+    )
+  )}
+</div>
 
-      {/* Line Graph */}
-      <div className="usdcchart-wrapper line">
-      <div className="usdcchart-header"> {/* Updated to match CSS */}
-      <h2>Line Graph for USDC Metrics</h2>
-      {lineQuery === 'market_cap_vs_total_volume' && (
-      <span className="usdcinfo-icon" title="More Information">🤔</span> 
-      )}
-    </div>
-    <canvas id="usdcLineChart"></canvas>
-    {loadingLine ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
+      {/* Line Chart */}
+<div className="usdcchart-wrapper bar">
+  <div className="usdcchart-header">
+    <h2>Line Graph for USDC Metrics</h2>
+    {lineQuery === 'market_cap_vs_total_volume' && (
+      <span className="usdcinfo-icon" title="More Information">🤔</span>
+    )}
+  </div>
+  <canvas id="usdcLineChart"></canvas>
+  {loadingLine ? (
+    <div className="usdcloading-indicator">Fetching insights<LoadingEllipsis /></div>
+  ) : (
+    lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
+      <div className="usdcchart-details">
+        <div key={currentLineInsight} className="usdcchart-item">
+          <div className="usdcchart-header">
+            <span>{currentLineInsight + 1}. </span>
           </div>
-        ) : (
-          lineInsights && (
-            <div className="usdcchart-details">
-              <p>{lineInsights}</p>
-            </div>
-          )
-        )}
+          <div className="usdcchart-content">
+            {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="usdcinsight-navigation">
+            <span className="usdcnav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+            <span className="usdcnav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+          </div>
+        </div>
       </div>
+    )
+  )}
+</div>
 
       {/* Waterfall Bar Chart */}
-      <div className="usdcchart-wrapper bar">
-        <div className="usdcchart-header">
-          <h2>Waterfall Bar Chart for USDC Metrics</h2>
-          {barQuery === 'valuation_metrics' && (
-          <span className="usdcinfo-icon" title="More Information">🤔</span> 
-          )}
-        </div>
-        <canvas id="usdcWaterfallBarChart"></canvas>
-        {loadingWaterfall ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
+<div className="usdcchart-wrapper bar">
+  <div className="usdcchart-header">
+    <h2>Waterfall Bar Chart for USDC Metrics</h2>
+    {barQuery === 'valuation_metrics' && (
+      <span className="usdcinfo-icon" title="More Information">🤔</span>
+    )}
+  </div>
+  <canvas id="usdcWaterfallBarChart"></canvas>
+  {loadingWaterfall ? (
+    <div className="usdcloading-indicator">Fetching insights<LoadingEllipsis /></div>
+  ) : (
+    waterfallInsights && validWaterfallBarInsights.length > 0 && barQuery !== 'full_metrics_bar' && (
+      <div className="usdcchart-details">
+        <div key={currentWaterfallBarInsight} className="usdcchart-item">
+          <div className="usdcchart-header">
+            <span>{currentWaterfallBarInsight + 1}. </span>
           </div>
-        ) : (
-          waterfallInsights && (
-            <div className="usdcchart-details">
-              <p>{waterfallInsights}</p>
-            </div>
-          )
-        )}
+          <div className="usdcchart-content">
+            {waterfallBarInsightContent ? waterfallBarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+          </div>
+          <div className="usdcinsight-navigation">
+            <span className="usdcnav-arrow" onClick={handlePrevWaterfallBarInsight}>{'<'}</span>
+            <span className="usdcnav-arrow" onClick={handleNextWaterfallBarInsight}>{'>'}</span>
+          </div>
+        </div>
       </div>
+    )
+  )}
+</div>
     </div>
   </div>
 );

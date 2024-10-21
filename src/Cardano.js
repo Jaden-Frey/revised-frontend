@@ -1047,47 +1047,130 @@ const [showPolarChartInfo, setShowPolarChartInfo] = useState(false);
  const toggleCombinedChartInfo = () => setShowCombinedChartInfo((prev) => !prev);
  const togglePolarChartInfo = () => setShowPolarChartInfo((prev) => !prev);
 
+ // State for Polar Chart Insights
+const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+const [polarInsightContent, setPolarInsightContent] = useState(null);
+const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+}, [currentPolarInsight, validPolarInsights]);
+
+const handleNextPolarInsight = () => {
+  const nextIndex = currentPolarInsight + 1;
+  setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevPolarInsight = () => {
+  const prevIndex = currentPolarInsight - 1;
+  setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+};
+
+// State for Grouped Bar Chart Insights
+const [currentGroupedBarInsight, setCurrentGroupedBarInsight] = useState(0);
+const [groupedBarInsightContent, setGroupedBarInsightContent] = useState(null);
+const validGroupedBarInsights = groupedInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setGroupedBarInsightContent(
+    validGroupedBarInsights.length > 0 ? validGroupedBarInsights[currentGroupedBarInsight] : null
+  );
+}, [currentGroupedBarInsight, validGroupedBarInsights]);
+
+const handleNextGroupedBarInsight = () => {
+  const nextIndex = currentGroupedBarInsight + 1;
+  setCurrentGroupedBarInsight(nextIndex >= validGroupedBarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevGroupedBarInsight = () => {
+  const prevIndex = currentGroupedBarInsight - 1;
+  setCurrentGroupedBarInsight(prevIndex < 0 ? validGroupedBarInsights.length - 1 : prevIndex);
+};
+
+// State for Line Chart Insights
+const [currentLineInsight, setCurrentLineInsight] = useState(0);
+const [lineInsightContent, setLineInsightContent] = useState(null);
+const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+}, [currentLineInsight, validLineInsights]);
+
+const handleNextLineInsight = () => {
+  const nextIndex = currentLineInsight + 1;
+  setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevLineInsight = () => {
+  const prevIndex = currentLineInsight - 1;
+  setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+};
+
+// State for Combined Chart Insights
+const [currentCombinedInsight, setCurrentCombinedInsight] = useState(0);
+const [combinedInsightContent, setCombinedInsightContent] = useState(null);
+const validCombinedInsights = priceChangeInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setCombinedInsightContent(validCombinedInsights.length > 0 ? validCombinedInsights[currentCombinedInsight] : null);
+}, [currentCombinedInsight, validCombinedInsights]);
+
+const handleNextCombinedInsight = () => {
+  const nextIndex = currentCombinedInsight + 1;
+  setCurrentCombinedInsight(nextIndex >= validCombinedInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevCombinedInsight = () => {
+  const prevIndex = currentCombinedInsight - 1;
+  setCurrentCombinedInsight(prevIndex < 0 ? validCombinedInsights.length - 1 : prevIndex);
+};
+
   return (
-  <div className="cardanopage-wrapper">
-      <h1 className="page-title">Cardano Visualization's</h1>
-      <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
-      <i className="bi bi-question-circle" title="Off to FAQ"></i>
-    </div>
+    <div className="cardanopage-wrapper">
+  <h1 className="page-title">Cardano Visualizations</h1>
+  <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
+    <i className="bi bi-question-circle" title="Off to FAQ"></i>
+  </div>
 
-    <div className="cardanochart-container">
+  <div className="cardanochart-container">
+    {/* Line Chart Query */}
     <div className="cardanoquery-container">
-          <select value={lineQuery} onChange={handleLineQueryChange}>
-            <option value="" hidden>📉 Select Line Chart Option</option>
-            <option value="total_volume_vs_circulating_supply"> 📉 Total Volume vs. Circulating Supply </option>
-            <option value="full_metrics_line"> 📉 All Line Metrics </option>
-          </select>
-        </div>
-  
-        <div className="cardanoquery-container">
-          <select value={combinedQuery} onChange={handleCombinedQueryChange}>
-            <option value="" hidden>🚀 Select Combined Chart Option</option>
-            <option value="market_cap_vs_volume_market_cap_change"> 🚀 Market Cap / Change vs. Volume </option>
-            <option value="full_metrics_combined"> 🚀 All Combined Metrics</option>
-          </select>
-        </div>
-  
-        <div className="cardanoquery-container">
-          <select value={polarQuery} onChange={handlePolarQueryChange}>
-            <option value="" hidden>❄️ Select Polar Chart Option</option>
-            <option value="market_cap_vs_circulating_supply"> ❄️ Market Cap vs. Volume</option>
-            <option value="full_metrics_polar"> ❄️ All Polar Metrics</option>
-          </select>
-        </div>
-
-        <div className="cardanoquery-container">
-          <select value={groupedQuery} onChange={handleGroupedQueryChange}>
-           <option value="" hidden>📶 Select Grouped Chart Option</option>
-           <option value="market_cap_vs_total_volume"> 📶 Market Cap vs. Total Volume</option>
-           <option value="full_metrics_bar"> 📶 All Grouped Metrics</option>
-        </select>
+      <select value={lineQuery} onChange={handleLineQueryChange}>
+        <option value="" hidden>📉 Line Chart</option>
+        <option value="total_volume_vs_circulating_supply">📉 Total Volume vs. Circulating Supply</option>
+        <option value="full_metrics_line">📉 Reset</option>
+      </select>
     </div>
 
-     {/* Heatmap Chart */}
+    {/* Combined Chart Query */}
+    <div className="cardanoquery-container">
+      <select value={combinedQuery} onChange={handleCombinedQueryChange}>
+        <option value="" hidden>🚀 Combined Chart</option>
+        <option value="market_cap_vs_volume_market_cap_change">🚀 Market Cap / Change vs. Volume</option>
+        <option value="full_metrics_combined">🚀 Reset</option>
+      </select>
+    </div>
+
+    {/* Polar Chart Query */}
+    <div className="cardanoquery-container">
+      <select value={polarQuery} onChange={handlePolarQueryChange}>
+        <option value="" hidden>❄️ Polar Chart</option>
+        <option value="market_cap_vs_circulating_supply">❄️ Market Cap vs. Volume</option>
+        <option value="full_metrics_polar">❄️ Reset</option>
+      </select>
+    </div>
+
+    {/* Grouped Chart Query */}
+    <div className="cardanoquery-container">
+      <select value={groupedQuery} onChange={handleGroupedQueryChange}>
+        <option value="" hidden>📶 Grouped Chart</option>
+        <option value="market_cap_vs_total_volume">📶 Market Cap vs. Total Volume</option>
+        <option value="full_metrics_bar">📶 Reset</option>
+      </select>
+    </div>
+
+    {/* Heatmap Chart for Cardano */}
+    <div className="cardanochart-container">
     <div className="cardanochart-wrapper heatmap">
     <div className="cardanochart-header">
         <h2>Heatmap for Cardano Metrics</h2>
@@ -1095,98 +1178,133 @@ const [showPolarChartInfo, setShowPolarChartInfo] = useState(false);
         <canvas id="cardanoHeatmapChart"></canvas>
     </div>
 
-    <div className="cardanochart-container">
-  {/* Polar Area Chart */}
-  <div className="cardanochart-wrapper polar">
-    <div className="cardanochart-header">
-      <h2>Polar Area Chart for Cardano KPIs</h2>
-      {polarQuery === 'market_cap_vs_circulating_supply' && (
-        <span className="cardanoinfo-icon" title="More Information">🤔</span> 
-     )}
-    </div>
-    <canvas id="cardanoPolarAreaChart"></canvas>
-    {loadingPolar ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+    {/* Polar Area Chart */}
+    <div className="cardanochart-wrapper bar">
+      <div className="cardanochart-header">
+        <h2>Polar Area Chart for Cardano KPIs</h2>
+        {polarQuery === 'market_cap_vs_circulating_supply' && (
+          <span className="cardanoinfo-icon" title="More Information">🤔</span>
+        )}
       </div>
-    ) : (
-      polarInsights && (
-        <div className="cardanochart-details">
-          <p>{polarInsights}</p>
-        </div>
-      )
-    )}
-  </div>
-
-  {/* Grouped Bar Chart */}
-  <div className="cardanochart-wrapper sbar">
-    <div className="cardanochart-header">
-      <h2>Grouped Bar Chart for Cardano Metrics</h2>
-      {groupedQuery === 'market_cap_vs_total_volume' && (
-        <span className="cardanoinfo-icon" title="More Information">🤔</span> 
+      <canvas id="cardanoPolarAreaChart"></canvas>
+      {loadingPolar ? (
+        <div className="cardanoloading-indicator">Fetching insights<LoadingEllipsis /></div>
+      ) : (
+        polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' &&  (
+          <div className="cardanochart-details">
+            <div key={currentPolarInsight} className="cardanochart-item">
+              <div className="cardanochart-header">
+                <span>{currentPolarInsight + 1}. </span>
+              </div>
+              <div className="cardanochart-content">
+                {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+              </div>
+              <div className="cardanoinsight-navigation">
+                <span className="cardanonav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+                <span className="cardanonav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+              </div>
+            </div>
+          </div>
+        )
       )}
     </div>
-    <canvas id="cardanoGroupedBarChart"></canvas>
-    {loadingGrouped ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
-      </div>
-    ) : (
-      groupedInsights && (
-        <div className="cardanochart-details">
-          <p>{groupedInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
-  {/* Line Graph */}
-  <div className="cardanochart-wrapper line">
-    <div className="cardanochart-header">
-      <h2>Line Graph for Cardano Metrics</h2>
-      {lineQuery === 'total_volume_vs_circulating_supply' && (
-        <span className="cardanoinfo-icon" title="More Information">🤔</span> 
-     )}
-    </div>
-    <canvas id="cardanoLineChart"></canvas>
-    {loadingLine ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+    {/* Grouped Bar Chart */}
+    <div className="cardanochart-wrapper bar">
+      <div className="cardanochart-header">
+        <h2>Grouped Bar Chart for Cardano Metrics</h2>
+        {groupedQuery === 'market_cap_vs_total_volume' && (
+          <span className="cardanoinfo-icon" title="More Information">🤔</span>
+        )}
       </div>
-    ) : (
-      lineInsights && (
-        <div className="cardanochart-details">
-          <p>{lineInsights}</p>
-        </div>
-      )
-    )}
-  </div>
-
-  {/* Combined Bar and Line Graph */}
-  <div className="cardanochart-wrapper sbar">
-    <div className="cardanochart-header">
-      <h2>Combined Bar and Line Graph Representing Cardano's Market Volatility</h2>
-      {combinedQuery === 'market_cap_vs_volume_market_cap_change' && (
-        <span className="cardanoinfo-icon" title="More Information">🤔</span> 
+      <canvas id="cardanoGroupedBarChart"></canvas>
+      {loadingGrouped ? (
+        <div className="cardanoloading-indicator">Fetching insights<LoadingEllipsis /></div>
+      ) : (
+        groupedInsights && validGroupedBarInsights.length > 0 && groupedQuery !== 'full_metrics_bar' && (
+          <div className="cardanochart-details">
+            <div key={currentGroupedBarInsight} className="cardanochart-item">
+              <div className="cardanochart-header">
+                <span>{currentGroupedBarInsight + 1}. </span>
+              </div>
+              <div className="cardanochart-content">
+                {groupedBarInsightContent ? groupedBarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+              </div>
+              <div className="cardanoinsight-navigation">
+                <span className="cardanonav-arrow" onClick={handlePrevGroupedBarInsight}>{'<'}</span>
+                <span className="cardanonav-arrow" onClick={handleNextGroupedBarInsight}>{'>'}</span>
+              </div>
+            </div>
+          </div>
+        )
       )}
     </div>
-    <canvas id="cardanoCombinedChart"></canvas>
-    {loadingPriceChange ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+
+    {/* Line Graph */}
+    <div className="cardanochart-wrapper bar">
+      <div className="cardanochart-header">
+        <h2>Line Graph for Cardano Metrics</h2>
+        {lineQuery === 'total_volume_vs_circulating_supply' && (
+          <span className="cardanoinfo-icon" title="More Information">🤔</span>
+        )}
       </div>
-    ) : (
-      priceChangeInsights && (
-        <div className="cardanochart-details">
-          <p>{priceChangeInsights}</p>
-        </div>
-      )
-    )}
-      </div>
+      <canvas id="cardanoLineChart"></canvas>
+      {loadingLine ? (
+        <div className="cardanoloading-indicator">Fetching insights<LoadingEllipsis /></div>
+      ) : (
+        lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
+          <div className="cardanochart-details">
+            <div key={currentLineInsight} className="cardanochart-item">
+              <div className="cardanochart-header">
+                <span>{currentLineInsight + 1}. </span>
+              </div>
+              <div className="cardanochart-content">
+                {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+              </div>
+              <div className="cardanoinsight-navigation">
+                <span className="cardanonav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+                <span className="cardanonav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+              </div>
+            </div>
+          </div>
+        )
+      )}
     </div>
-  </div>
-</div>
-  );
-};
+
+    {/* Combined Bar and Line Graph */}
+    <div className="cardanochart-wrapper bar">
+      <div className="cardanochart-header">
+        <h2>Combined Bar and Line Graph Representing Cardano's Market Volatility</h2>
+        {combinedQuery === 'market_cap_vs_volume_market_cap_change' && (
+          <span className="cardanoinfo-icon" title="More Information">🤔</span>
+        )}
+      </div>
+      <canvas id="cardanoCombinedChart"></canvas>
+      {loadingPriceChange ? (
+        <div className="cardanoloading-indicator">Fetching insights<LoadingEllipsis /></div>
+      ) : (
+        priceChangeInsights && validCombinedInsights.length > 0 && combinedQuery !== 'full_metrics_combined' && (
+          <div className="cardanochart-details">
+            <div key={currentCombinedInsight} className="cardanochart-item">
+              <div className="cardanochart-header">
+                <span>{currentCombinedInsight + 1}. </span>
+              </div>
+              <div className="cardanochart-content">
+                {combinedInsightContent ? combinedInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+              </div>
+              <div className="cardanoinsight-navigation">
+                <span className="cardanonav-arrow" onClick={handlePrevCombinedInsight}>{'<'}</span>
+                <span className="cardanonav-arrow" onClick={handleNextCombinedInsight}>{'>'}</span>
+              </div>
+            </div>
+          </div>
+        )
+      )}
+      </div>
+          </div>
+      </div>
+      </div>
+        );
+      };  
 
 export default CardanoCharts;

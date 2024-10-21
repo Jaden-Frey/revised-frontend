@@ -365,26 +365,26 @@ chartRefs.current.line = new Chart(lineCtx, {
     <i className="bi bi-question-circle" title="Off to FAQ"></i>
   </div>
   <div className="homepage-container">
-    <div className="chart-container">
+    <div className="homechart-container">
       {/* Bar Chart */}
-      <div className="chart-wrapper bar">
-        <div className="chart-header">
+      <div className="homechart-wrapper bar">
+        <div className="homechart-header">
           <h2>Comparative Bar Chart for All Coins</h2>
         </div>
         <canvas id="barChart"></canvas>
       </div>
 
       {/* Scatter Chart */}
-      <div className="chart-wrapper bar">
-        <div className="chart-header">
+      <div className="homechart-wrapper bar">
+        <div className="homechart-header">
           <h2>Scatter Chart for All Coins</h2>
         </div>
         <canvas id="scatterChart"></canvas>
       </div>
 
       {/* Dual Axis Line Chart */}
-      <div className="chart-wrapper bar">
-        <div className="chart-header">
+      <div className="homechart-wrapper bar">
+        <div className="homechart-header">
           <h2>Dual Axis Line Chart for All Coins</h2>
         </div>
         <canvas id="lineChart"></canvas>

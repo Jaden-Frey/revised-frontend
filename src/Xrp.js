@@ -798,117 +798,195 @@ const [showWaterfallBarChartInfo, setShowWaterfallBarChartInfo] = useState(false
  const toggleWaterfallBarChartInfo = () => setShowWaterfallBarChartInfo((prev) => !prev);
  const togglePolarChartInfo = () => setShowPolarChartInfo((prev) => !prev);
 
+ // State for Polar Chart Insights
+ const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+ const [polarInsightContent, setPolarInsightContent] = useState(null);
+ const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+ }, [currentPolarInsight, validPolarInsights]);
+
+ const handleNextPolarInsight = () => {
+   const nextIndex = currentPolarInsight + 1;
+   setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevPolarInsight = () => {
+   const prevIndex = currentPolarInsight - 1;
+   setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+ };
+
+ // State for Stacked Chart Insights
+ const [currentStackedInsight, setCurrentStackedInsight] = useState(0);
+ const [stackedInsightContent, setStackedInsightContent] = useState(null);
+ const validStackedInsights = stackedInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setStackedInsightContent(validStackedInsights.length > 0 ? validStackedInsights[currentStackedInsight] : null);
+ }, [currentStackedInsight, validStackedInsights]);
+
+ const handleNextStackedInsight = () => {
+   const nextIndex = currentStackedInsight + 1;
+   setCurrentStackedInsight(nextIndex >= validStackedInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevStackedInsight = () => {
+   const prevIndex = currentStackedInsight - 1;
+   setCurrentStackedInsight(prevIndex < 0 ? validStackedInsights.length - 1 : prevIndex);
+ };
+
+ // State for Waterfall Bar Chart Insights
+ const [currentWaterfallBarInsight, setCurrentWaterfallBarInsight] = useState(0);
+ const [waterfallBarInsightContent, setWaterfallBarInsightContent] = useState(null);
+ const validWaterfallBarInsights = waterfallInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setWaterfallBarInsightContent(validWaterfallBarInsights.length > 0 ? validWaterfallBarInsights[currentWaterfallBarInsight] : null);
+ }, [currentWaterfallBarInsight, validWaterfallBarInsights]);
+
+ const handleNextWaterfallBarInsight = () => {
+   const nextIndex = currentWaterfallBarInsight + 1;
+   setCurrentWaterfallBarInsight(nextIndex >= validWaterfallBarInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevWaterfallBarInsight = () => {
+   const prevIndex = currentWaterfallBarInsight - 1;
+   setCurrentWaterfallBarInsight(prevIndex < 0 ? validWaterfallBarInsights.length - 1 : prevIndex);
+ };
+
+ // State for Line Chart Insights
+ const [currentLineInsight, setCurrentLineInsight] = useState(0);
+ const [lineInsightContent, setLineInsightContent] = useState(null);
+ const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+ }, [currentLineInsight, validLineInsights]);
+
+ const handleNextLineInsight = () => {
+   const nextIndex = currentLineInsight + 1;
+   setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevLineInsight = () => {
+   const prevIndex = currentLineInsight - 1;
+   setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+ };
+
+
 
 // Rendering the components
+// Rendering the components
 return (
-    <div className="xrppage-wrapper">
-        <h1 className="page-title">XRP Visualizations</h1>
-        <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
-            <i className="bi bi-question-circle" title="Off to FAQ"></i>
+  <div className="xrppage-wrapper">
+    <h1 className="page-title">XRP Visualizations</h1>
+    <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
+      <i className="bi bi-question-circle" title="Off to FAQ"></i>
+    </div>
+
+    <div className="xrpchart-container">
+      {/* Polar Chart Query Selector */}
+      <div className="xrpquery-container">
+        <select value={polarQuery} onChange={handlePolarQueryChange}>
+          <option value="" hidden>❄️ Select Polar Chart Option</option>
+          <option value="market_cap_vs_volume"> ❄️ Market Cap vs. Volume </option>
+          <option value="full_metrics_polar"> ❄️ All Polar Metrics </option>
+        </select>
+      </div>
+
+      {/* Stacked Chart Query Selector */}
+      <div className="xrpquery-container">
+        <select value={stackedQuery} onChange={handleStackedQueryChange}>
+          <option value="" hidden>📚 Select Stacked Chart Option</option>
+          <option value="market_cap_vs_circulating_supply"> 📚 Market Cap vs. Circulating Supply </option>
+          <option value="full_metrics_stacked"> 📚 All Stacked Metrics </option>
+        </select>
+      </div>
+
+      {/* Waterfall Bar Chart Query Selector */}
+      <div className="xrpquery-container">
+        <select value={barQuery} onChange={handleBarQueryChange}>
+          <option value="" hidden>📊 Select Waterfall Bar Chart Option</option>
+          <option value="valuation_metrics"> 📊 Performance Metrics </option>
+          <option value="full_metrics_bar"> 📊 All Waterfall Bar Metrics </option>
+        </select>
+      </div>
+
+      {/* Line Chart Query Selector */}
+      <div className="xrpquery-container">
+        <select value={lineQuery} onChange={handleLineQueryChange}>
+          <option value="" hidden>📉 Select Line Chart Option</option>
+          <option value="total_volume_vs_circulating_supply"> 📉 Total Volume vs. Circulating Supply </option>
+          <option value="full_metrics_line"> 📉 All Line Metrics </option>
+        </select>
+      </div>
+
+      {/* Heatmap Chart */}
+      <div className="xrpchart-wrapper heatmap">
+        <div className="xrpchart-header">
+          <h2>Heatmap for XRP Metrics</h2>
         </div>
-
-        <div className="xrpchart-container">
-            <div className="xrpquery-container">
-                <select value={polarQuery} onChange={handlePolarQueryChange}>
-                    <option value="" hidden>❄️ Select Polar Chart Option</option>
-                    <option value="market_cap_vs_volume"> ❄️ Market Cap vs. Volume </option>
-                    <option value="full_metrics_polar"> ❄️ All Polar Metrics </option>
-                </select>
-            </div>
-
-            <div className="xrpquery-container">
-                <select value={stackedQuery} onChange={handleStackedQueryChange}>
-                    <option value="" hidden>📚 Select Stacked Chart Option</option>
-                    <option value="market_cap_vs_circulating_supply"> 📚 Market Cap vs. Circulating Supply </option>
-                    <option value="full_metrics_stacked"> 📚 All Stacked Metrics </option>
-                </select>
-            </div>
-
-            <div className="xrpquery-container">
-                <select value={barQuery} onChange={handleBarQueryChange}>
-                    <option value="" hidden>📊 Select Waterfall Bar Chart Option</option>
-                    <option value="valuation_metrics"> 📊 Performance Metrics </option>
-                    <option value="full_metrics_bar"> 📊 All Waterfall Bar Metrics </option>
-                </select>
-            </div>
-
-            <div className="xrpquery-container">
-                <select value={lineQuery} onChange={handleLineQueryChange}>
-                    <option value="" hidden>📉 Select Line Chart Option</option>
-                    <option value="total_volume_vs_circulating_supply"> 📉 Total Volume vs. Circulating Supply </option>
-                    <option value="full_metrics_line"> 📉 All Line Metrics </option>
-                </select>
-            </div>
-
-    {/* Heatmap Chart */}
-    <div className="xrpchart-wrapper heatmap">
-    <div className="xrpchart-header">
-        <h2>Heatmap for XRP Metrics</h2>
-    </div>
         <canvas id="xrpHeatmapChart"></canvas>
-    </div>
+      </div>
 
       {/* Polar Area Chart */}
-      <div className="xrpchart-wrapper polar">
+      <div className="xrpchart-wrapper bar">
         <div className="xrpchart-header">
-          <h2>Polar Area Chart for XRP KPIs</h2>
+          <h2>Polar Area Chart for XRP Metrics</h2>
           {polarQuery === 'market_cap_vs_volume' && (
-          <span className="xrpinfo-icon" title="More Information">🤔</span> 
+            <span className="xrpinfo-icon" title="More Information">🤔</span>
           )}
         </div>
         <canvas id="xrpPolarAreaChart"></canvas>
         {loadingPolar ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
+          <div className="xrploading-indicator">Fetching insights<LoadingEllipsis /></div>
         ) : (
-          polarInsights && (
+          polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
             <div className="xrpchart-details">
-              <p>{polarInsights}</p>
+              <div key={currentPolarInsight} className="xrpchart-item">
+                <div className="xrpchart-header">
+                  <span>{currentPolarInsight + 1}. </span>
+                </div>
+                <div className="xrpchart-content">
+                  {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="xrpinsight-navigation">
+                  <span className="xrpnav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+                  <span className="xrpnav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+                </div>
+              </div>
             </div>
           )
         )}
       </div>
 
       {/* Stacked Chart */}
-      <div className="xrpchart-wrapper stack">
+      <div className="xrpchart-wrapper bar">
         <div className="xrpchart-header">
           <h2>Stacked Chart for XRP Metrics</h2>
           {stackedQuery === 'market_cap_vs_circulating_supply' && (
-          <span className="xrpinfo-icon" title="More Information">🤔</span> 
+            <span className="xrpinfo-icon" title="More Information">🤔</span>
           )}
         </div>
         <canvas id="xrpStackedBarChart"></canvas>
         {loadingStacked ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
+          <div className="xrploading-indicator">Fetching insights<LoadingEllipsis /></div>
         ) : (
-          stackedInsights && (
+          stackedInsights && validStackedInsights.length > 0 && stackedQuery !== 'full_metrics_stacked' && (
             <div className="xrpchart-details">
-              <p>{stackedInsights}</p>
-            </div>
-          )
-        )}
-      </div>
-
-      {/* Line Graph */}
-      <div className="xrpchart-wrapper line">
-        <div className="xrpchart-header">
-          <h2>Line Graph for XRP Metrics</h2>
-          {lineQuery === 'total_volume_vs_circulating_supply' && (
-          <span className="xrpinfo-icon" title="More Information">🤔</span> 
-          )}
-        </div>
-        <canvas id="xrpLineChart"></canvas>
-        {loadingLine ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          lineInsights && (
-            <div className="xrpchart-details">
-              <p>{lineInsights}</p>
+              <div key={currentStackedInsight} className="xrpchart-item">
+                <div className="xrpchart-header">
+                  <span>{currentStackedInsight + 1}. </span>
+                </div>
+                <div className="xrpchart-content">
+                  {stackedInsightContent ? stackedInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="xrpinsight-navigation">
+                  <span className="xrpnav-arrow" onClick={handlePrevStackedInsight}>{'<'}</span>
+                  <span className="xrpnav-arrow" onClick={handleNextStackedInsight}>{'>'}</span>
+                </div>
+              </div>
             </div>
           )
         )}
@@ -919,18 +997,58 @@ return (
         <div className="xrpchart-header">
           <h2>Waterfall Bar Chart for XRP Metrics</h2>
           {barQuery === 'valuation_metrics' && (
-          <span className="xrpinfo-icon" title="More Information">🤔</span> 
+            <span className="xrpinfo-icon" title="More Information">🤔</span>
           )}
         </div>
         <canvas id="xrpWaterfallBarChart"></canvas>
         {loadingWaterfall ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
+          <div className="xrploading-indicator">Fetching insights<LoadingEllipsis /></div>
         ) : (
-          waterfallInsights && (
+          waterfallInsights && validWaterfallBarInsights.length > 0 && barQuery !== 'full_metrics_bar' && (
             <div className="xrpchart-details">
-              <p>{waterfallInsights}</p>
+              <div key={currentWaterfallBarInsight} className="xrpchart-item">
+                <div className="xrpchart-header">
+                  <span>{currentWaterfallBarInsight + 1}. </span>
+                </div>
+                <div className="xrpchart-content">
+                  {waterfallBarInsightContent ? waterfallBarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="xrpinsight-navigation">
+                  <span className="xrpnav-arrow" onClick={handlePrevWaterfallBarInsight}>{'<'}</span>
+                  <span className="xrpnav-arrow" onClick={handleNextWaterfallBarInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
+      </div>
+
+      {/* Line Graph */}
+      <div className="xrpchart-wrapper bar">
+        <div className="xrpchart-header">
+          <h2>Line Graph for XRP Metrics</h2>
+          {lineQuery === 'total_volume_vs_circulating_supply' && (
+            <span className="xrpinfo-icon" title="More Information">🤔</span>
+          )}
+        </div>
+        <canvas id="xrpLineChart"></canvas>
+        {loadingLine ? (
+          <div className="xrploading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
+            <div className="xrpchart-details">
+              <div key={currentLineInsight} className="xrpchart-item">
+                <div className="xrpchart-header">
+                  <span>{currentLineInsight + 1}. </span>
+                </div>
+                <div className="xrpchart-content">
+                  {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="xrpinsight-navigation">
+                  <span className="xrpnav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+                  <span className="xrpnav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+                </div>
+              </div>
             </div>
           )
         )}

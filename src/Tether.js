@@ -825,164 +825,304 @@ const toggleScatterChartInfo = () => setShowScatterChartInfo((prev) => !prev);
 const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
 const toggleRadarChartInfo = () => setShowRadarChartInfo((prev) => !prev);
 
-  return (
-    <div className="tetherpage-wrapper">
-        <h1 className="page-title">Tether Visualization's</h1>
-        <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
-        <i className="bi bi-question-circle" title="Off to FAQ"></i>
-      </div>
-      
-      <div className="tetherchart-container">
+// State for Polar Chart Insights
+const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+const [polarInsightContent, setPolarInsightContent] = useState(null);
+const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+}, [currentPolarInsight, validPolarInsights]);
+
+const handleNextPolarInsight = () => {
+  const nextIndex = currentPolarInsight + 1;
+  setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevPolarInsight = () => {
+  const prevIndex = currentPolarInsight - 1;
+  setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+};
+
+// State for Doughnut Chart Insights
+const [currentDoughnutInsight, setCurrentDoughnutInsight] = useState(0);
+const [doughnutInsightContent, setDoughnutInsightContent] = useState(null);
+const validDoughnutInsights = doughnutInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setDoughnutInsightContent(validDoughnutInsights.length > 0 ? validDoughnutInsights[currentDoughnutInsight] : null);
+}, [currentDoughnutInsight, validDoughnutInsights]);
+
+const handleNextDoughnutInsight = () => {
+  const nextIndex = currentDoughnutInsight + 1;
+  setCurrentDoughnutInsight(nextIndex >= validDoughnutInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevDoughnutInsight = () => {
+  const prevIndex = currentDoughnutInsight - 1;
+  setCurrentDoughnutInsight(prevIndex < 0 ? validDoughnutInsights.length - 1 : prevIndex);
+};
+
+// State for Scatter Chart Insights
+const [currentScatterInsight, setCurrentScatterInsight] = useState(0);
+const [scatterInsightContent, setScatterInsightContent] = useState(null);
+const validScatterInsights = scatterInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setScatterInsightContent(validScatterInsights.length > 0 ? validScatterInsights[currentScatterInsight] : null);
+}, [currentScatterInsight, validScatterInsights]);
+
+const handleNextScatterInsight = () => {
+  const nextIndex = currentScatterInsight + 1;
+  setCurrentScatterInsight(nextIndex >= validScatterInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevScatterInsight = () => {
+  const prevIndex = currentScatterInsight - 1;
+  setCurrentScatterInsight(prevIndex < 0 ? validScatterInsights.length - 1 : prevIndex);
+};
+
+// State for Line Chart Insights
+const [currentLineInsight, setCurrentLineInsight] = useState(0);
+const [lineInsightContent, setLineInsightContent] = useState(null);
+const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+}, [currentLineInsight, validLineInsights]);
+
+const handleNextLineInsight = () => {
+  const nextIndex = currentLineInsight + 1;
+  setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevLineInsight = () => {
+  const prevIndex = currentLineInsight - 1;
+  setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+};
+
+// State for Radar Chart Insights
+const [currentRadarInsight, setCurrentRadarInsight] = useState(0);
+const [radarInsightContent, setRadarInsightContent] = useState(null);
+const validRadarInsights = radarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+ setRadarInsightContent(validRadarInsights.length > 0 ? validRadarInsights[currentRadarInsight] : null);
+}, [currentRadarInsight, validRadarInsights]);
+
+const handleNextRadarInsight = () => {
+ const nextIndex = currentRadarInsight + 1;
+ setCurrentRadarInsight(nextIndex >= validRadarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevRadarInsight = () => {
+ const prevIndex = currentRadarInsight - 1;
+ setCurrentRadarInsight(prevIndex < 0 ? validRadarInsights.length - 1 : prevIndex);
+};
+
+return (
+  <div className="tetherpage-wrapper">
+    <h1 className="page-title">Tether Visualization's</h1>
+    <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
+      <i className="bi bi-question-circle" title="Off to FAQ"></i>
+    </div>
+
+    <div className="tetherchart-container">
       <div className="tetherquery-container">
         <select 
-            value={lineQuery || radarQuery} 
-            onChange={handleLineOrRadarQueryChange}
-          >
-            <option value="" hidden>📉📡 Select Line or Radar Chart Option</option>
-            <option value="market_cap_vs_circulating_supply_line">📉 Market Cap vs. Circulating Supply</option>
-            <option value="full_metrics_line">📉 All Line Metrics</option>
-            <option value="full_metrics_radar">📡 All Radar Metrics</option>
-          </select>
+          value={lineQuery || radarQuery} 
+          onChange={handleLineOrRadarQueryChange}
+        >
+          <option value="" hidden>📉📡 Line / Radar Chart </option>
+          <option value="market_cap_vs_circulating_supply_line">📉 Market Cap vs. Circulating Supply</option>
+          <option value="full_metrics_line">📉📡 Reset </option>
+          <option value="full_metrics_radar">📡 Radar Metrics</option>
+        </select>
+      </div>
+
+      <div className="tetherquery-container">
+        <select value={polarQuery} onChange={handlePolarQueryChange}>
+          <option value="" hidden>❄️ Polar Chart </option>
+          <option value="market_cap_vs_volume"> ❄️ Market Cap vs. Volume </option>
+          <option value="full_metrics_polar"> ❄️ Reset </option>
+        </select>
+      </div>
+
+      <div className="tetherquery-container">
+        <select value={doughnutQuery} onChange={handleDoughnutQueryChange}>
+          <option value="" hidden>🍩 Doughnut Chart </option>
+          <option value="market_cap_vs_circulating_supply_total_supply"> 🍩 Market Cap vs. Circulating/Total Supply</option>
+          <option value="full_metrics_doughnut"> 🍩 Reset </option>
+        </select>
+      </div>
+
+      <div className="tetherquery-container">
+        <select value={scatterQuery} onChange={handleScatterQueryChange}>
+          <option value="" hidden>🌍 Scatter Chart </option>
+          <option value="market_cap_vs_volume_vs_price"> 🌍 Market Cap vs. Volume vs. Price </option>
+          <option value="full_metrics_scatter"> 🌍 Reset </option>
+        </select>
+      </div>
+    </div>
+
+    <div className="tetherchart-container">
+      {/* Polar Area Chart */}
+      <div className="tetherchart-wrapper bar">
+        <div className="tetherchart-header">
+          <h2>Polar Area Chart for Tether KPIs</h2>
+          {polarQuery === 'market_cap_vs_volume' && (
+            <span className="tetherinfo-icon" title="More Information">🤔</span>
+          )}
         </div>
-  
-      <div className="tetherquery-container">
-                  <select value={polarQuery} onChange={handlePolarQueryChange}>
-                      <option value="" hidden>❄️ Select Polar Chart Option</option>
-                      <option value="market_cap_vs_volume"> ❄️ Market Cap vs. Volume </option>
-                      <option value="full_metrics_polar"> ❄️ All Polar Metrics </option>
-                  </select>
-      </div>
-
-      <div className="tetherquery-container">
-                  <select value={doughnutQuery} onChange={handleDoughnutQueryChange}>
-                     <option value="" hidden>🍩 Select Doughnut Chart Option</option>
-                     <option value="market_cap_vs_circulating_supply_total_supply"> 🍩 Market Cap vs. Circulating/Total Supply</option>
-                     <option value="full_metrics_doughnut"> 🍩 All Doughnut Metrics </option>
-                  </select>
-      </div>
-
-      <div className="tetherquery-container">
-                  <select value={scatterQuery} onChange={handleScatterQueryChange}>
-                    <option value="" hidden>🌍 Select Scatter Chart Option</option>
-                    <option value="market_cap_vs_volume_vs_price"> 🌍 Market Cap vs. Volume vs. Price </option>
-                    <option value="full_metrics_scatter"> 🌍 All Scatter Metrics </option>
-                    </select>
-            </div>
-    </div>
-    
-  <div className="tetherchart-container">
-  {/* Polar Area Chart */}
-  <div className="tetherchart-wrapper radar">
-    <div className="tetherchart-header"> {/* Updated to match CSS */}
-      <h2>Polar Area Chart for Tether KPIs</h2>
-      {polarQuery === 'market_cap_vs_volume' && (
-      <span className="tetherinfo-icon" title="More Information">🤔</span> 
-      )}
-    </div>
-    <canvas id="tetPolarAreaChart"></canvas>
-    {loadingPolar ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
+        <canvas id="tetPolarAreaChart"></canvas>
+        {loadingPolar ? (
+          <div className="tetherloading-indicator">Fetching insights<LoadingEllipsis /></div>
         ) : (
-          polarInsights && (
+          polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
             <div className="tetherchart-details">
-              <p>{polarInsights}</p>
-            </div>
-          )
-        )}
-    </div>
-
-  {/* Doughnut Chart */}
-  <div className="tetherchart-wrapper radar">
-    <div className="tetherchart-header"> {/* Updated to match CSS */}
-      <h2>Doughnut Chart for Tether Metrics</h2>
-      {doughnutQuery === 'market_cap_vs_circulating_supply_total_supply' && (
-      <span className="tetherinfo-icon" title="More Information">🤔</span> 
-      )}
-    </div>
-    <canvas id="tetDoughnutChart"></canvas>
-    {loadingDoughnut ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
-        ) : (
-          doughnutInsights && (
-            <div className="tetherchart-details">
-              <p>{doughnutInsights}</p>
+              <div key={currentPolarInsight} className="tetherchart-item">
+                <div className="tetherchart-header">
+                  <span>{currentPolarInsight + 1}. </span>
+                </div>
+                <div className="tetherchart-content">
+                  {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="tetherinsight-navigation">
+                  <span className="tethernav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+                  <span className="tethernav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+                </div>
+              </div>
             </div>
           )
         )}
       </div>
 
-  {/* Scatter Chart */}
-  <div className="tetherchart-wrapper radar">
-    <div className="tetherchart-header"> {/* Updated to match CSS */}
-      <h2>Scatterplot Chart for Tether Metrics</h2>
-      {scatterQuery === 'market_cap_vs_volume_vs_price' && (
-      <span className="tetherinfo-icon" title="More Information">🤔</span> 
-      )}
-    </div>
-    <canvas id="tetScatterChart"></canvas>
-    {loadingScatter ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
+      {/* Doughnut Chart */}
+      <div className="tetherchart-wrapper bar">
+        <div className="tetherchart-header">
+          <h2>Doughnut Chart for Tether Metrics</h2>
+          {doughnutQuery === 'market_cap_vs_circulating_supply_total_supply' && (
+            <span className="tetherinfo-icon" title="More Information">🤔</span>
+          )}
+        </div>
+        <canvas id="tetDoughnutChart"></canvas>
+        {loadingDoughnut ? (
+          <div className="tetherloading-indicator">Fetching insights<LoadingEllipsis /></div>
         ) : (
-          scatterInsights && (
+          doughnutInsights && validDoughnutInsights.length > 0 && doughnutQuery !== 'full_metrics_doughnut' &&(
             <div className="tetherchart-details">
-              <p>{scatterInsights}</p>
+              <div key={currentDoughnutInsight} className="tetherchart-item">
+                <div className="tetherchart-header">
+                  <span>{currentDoughnutInsight + 1}. </span>
+                </div>
+                <div className="tetherchart-content">
+                  {doughnutInsightContent ? doughnutInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="tetherinsight-navigation">
+                  <span className="tethernav-arrow" onClick={handlePrevDoughnutInsight}>{'<'}</span>
+                  <span className="tethernav-arrow" onClick={handleNextDoughnutInsight}>{'>'}</span>
+                </div>
+              </div>
             </div>
           )
         )}
       </div>
 
-  {/* Line Chart */}
-  <div className="tetherchart-wrapper radar">
-    <div className="tetherchart-header"> {/* Updated to match CSS */}
-      <h2>Line Graph for Tether Metrics</h2>
-      {lineQuery === 'market_cap_vs_circulating_supply_line' && (
-      <span className="tetherinfo-icon" title="More Information">🤔</span> 
-      )}
-    </div>
-    <canvas id="tetLineChart"></canvas>
-    {loadingLine ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
+      {/* Scatter Chart */}
+      <div className="tetherchart-wrapper bar">
+        <div className="tetherchart-header">
+          <h2>Scatterplot Chart for Tether Metrics</h2>
+          {scatterQuery === 'market_cap_vs_volume_vs_price' && (
+            <span className="tetherinfo-icon" title="More Information">🤔</span>
+          )}
+        </div>
+        <canvas id="tetScatterChart"></canvas>
+        {loadingScatter ? (
+          <div className="tetherloading-indicator">Fetching insights<LoadingEllipsis /></div>
         ) : (
-          lineInsights && (
+          scatterInsights && validScatterInsights.length > 0 && scatterQuery !== 'full_metrics_scatter' && (
             <div className="tetherchart-details">
-              <p>{lineInsights}</p>
+              <div key={currentScatterInsight} className="tetherchart-item">
+                <div className="tetherchart-header">
+                  <span>{currentScatterInsight + 1}. </span>
+                </div>
+                <div className="tetherchart-content">
+                  {scatterInsightContent ? scatterInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="tetherinsight-navigation">
+                  <span className="tethernav-arrow" onClick={handlePrevScatterInsight}>{'<'}</span>
+                  <span className="tethernav-arrow" onClick={handleNextScatterInsight}>{'>'}</span>
+                </div>
+              </div>
             </div>
           )
         )}
       </div>
 
-  {/* Radar Chart */}
-  <div className="tetherchart-wrapper radar">
-    <div className="tetherchart-header"> {/* Updated to match CSS */}
-      <h2>Radar Chart for Tether KPI's</h2>
-      {radarQuery === 'full_metrics_radar' && (
-        <span className="tetherinfo-icon" title="More Information"> 🤔 </span>
-      )}
-    </div>
-    <canvas id="tetRadarChart"></canvas>
-    {loadingRadar ? (
-          <div className="loading-indicator">
-            Fetching insights<LoadingEllipsis />
-          </div>
+      {/* Line Chart */}
+      <div className="tetherchart-wrapper bar">
+        <div className="tetherchart-header">
+          <h2>Line Graph for Tether Metrics</h2>
+          {lineQuery === 'market_cap_vs_circulating_supply_line' && (
+            <span className="tetherinfo-icon" title="More Information">🤔</span>
+          )}
+        </div>
+        <canvas id="tetLineChart"></canvas>
+        {loadingLine ? (
+          <div className="tetherloading-indicator">Fetching insights<LoadingEllipsis /></div>
         ) : (
-          radarInsights && (
+          lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
             <div className="tetherchart-details">
-              <p>{radarInsights}</p>
+              <div key={currentLineInsight} className="tetherchart-item">
+                <div className="tetherchart-header">
+                  <span>{currentLineInsight + 1}. </span>
+                </div>
+                <div className="tetherchart-content">
+                  {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="tetherinsight-navigation">
+                  <span className="tethernav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+                  <span className="tethernav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+                </div>
+              </div>
             </div>
           )
         )}
       </div>
+
+      {/* Radar Chart */}
+      <div className="tetherchart-wrapper bar">
+        <div className="tetherchart-header">
+          <h2>Radar Chart for Tether Metrics</h2>
+          {radarQuery === 'full_metrics_radar' && (
+            <span className="tetherinfo-icon" title="More Information"></span>
+          )}
+        </div>
+        <canvas id="tetRadarChart"></canvas>
+        {loadingRadar ? (
+          <div className="tetherloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          radarInsights && validRadarInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
+            <div className="tetherchart-details">
+              <div key={currentRadarInsight} className="tetherchart-item">
+                <div className="tetherchart-header">
+                  <span>{currentRadarInsight + 1}. </span>
+                </div>
+                <div className="tetherchart-content">
+                  {radarInsightContent ? radarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="tetherinsight-navigation">
+                  <span className="tethernav-arrow" onClick={handlePrevRadarInsight}>{'<'}</span>
+                  <span className="tethernav-arrow" onClick={handleNextRadarInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
+      </div>
+    </div>
   </div>
-</div>
-  );
+);
 };
 
 export default TetherCharts;

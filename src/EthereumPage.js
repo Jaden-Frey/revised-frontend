@@ -989,6 +989,101 @@ const toggleCombinedChartInfo = () => setShowCombinedChartInfo((prev) => !prev);
 const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
 const toggleScatterChartInfo = () => setShowScatterChartInfo((prev) => !prev);
 
+ // State for Polar Chart Insights
+ const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+ const [polarInsightContent, setPolarInsightContent] = useState(null);
+ const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+ }, [currentPolarInsight, validPolarInsights]);
+
+ const handleNextPolarInsight = () => {
+   const nextIndex = currentPolarInsight + 1;
+   setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevPolarInsight = () => {
+   const prevIndex = currentPolarInsight - 1;
+   setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+ };
+
+ // State for Doughnut Chart Insights
+ const [currentDoughnutInsight, setCurrentDoughnutInsight] = useState(0);
+ const [doughnutInsightContent, setDoughnutInsightContent] = useState(null);
+ const validDoughnutInsights = doughnutInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setDoughnutInsightContent(validDoughnutInsights.length > 0 ? validDoughnutInsights[currentDoughnutInsight] : null);
+ }, [currentDoughnutInsight, validDoughnutInsights]);
+
+ const handleNextDoughnutInsight = () => {
+   const nextIndex = currentDoughnutInsight + 1;
+   setCurrentDoughnutInsight(nextIndex >= validDoughnutInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevDoughnutInsight = () => {
+   const prevIndex = currentDoughnutInsight - 1;
+   setCurrentDoughnutInsight(prevIndex < 0 ? validDoughnutInsights.length - 1 : prevIndex);
+ };
+
+ // State for Scatter Chart Insights
+ const [currentScatterInsight, setCurrentScatterInsight] = useState(0);
+ const [scatterInsightContent, setScatterInsightContent] = useState(null);
+ const validScatterInsights = scatterInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setScatterInsightContent(validScatterInsights.length > 0 ? validScatterInsights[currentScatterInsight] : null);
+ }, [currentScatterInsight, validScatterInsights]);
+
+ const handleNextScatterInsight = () => {
+   const nextIndex = currentScatterInsight + 1;
+   setCurrentScatterInsight(nextIndex >= validScatterInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevScatterInsight = () => {
+   const prevIndex = currentScatterInsight - 1;
+   setCurrentScatterInsight(prevIndex < 0 ? validScatterInsights.length - 1 : prevIndex);
+ };
+
+ // State for Line Chart Insights
+ const [currentLineInsight, setCurrentLineInsight] = useState(0);
+ const [lineInsightContent, setLineInsightContent] = useState(null);
+ const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+ useEffect(() => {
+   setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+ }, [currentLineInsight, validLineInsights]);
+
+ const handleNextLineInsight = () => {
+   const nextIndex = currentLineInsight + 1;
+   setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+ };
+
+ const handlePrevLineInsight = () => {
+   const prevIndex = currentLineInsight - 1;
+   setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+ };
+
+ // State for Combined Chart Insights
+const [currentCombinedInsight, setCurrentCombinedInsight] = useState(0);
+const [combinedInsightContent, setCombinedInsightContent] = useState(null);
+const validCombinedInsights = priceChangeInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setCombinedInsightContent(validCombinedInsights.length > 0 ? validCombinedInsights[currentCombinedInsight] : null);
+}, [currentCombinedInsight, validCombinedInsights]);
+
+const handleNextCombinedInsight = () => {
+  const nextIndex = currentCombinedInsight + 1;
+  setCurrentCombinedInsight(nextIndex >= validCombinedInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevCombinedInsight = () => {
+  const prevIndex = currentCombinedInsight - 1;
+  setCurrentCombinedInsight(prevIndex < 0 ? validCombinedInsights.length - 1 : prevIndex);
+};
+
 return (
   <div className="ethereumpage-wrapper">
       <h1 className="page-title">Ethereum Visualization's</h1>
@@ -999,9 +1094,9 @@ return (
     <div className="ethereumchart-container">
     <div className="ethereumquery-container">
                 <select value={lineQuery} onChange={handleLineQueryChange}>
-                    <option value="" hidden>📉Select Line Chart Option</option>
+                    <option value="" hidden>📉Line Chart </option>
                     <option value="market_cap_vs_circulating_supply"> 📉 Market Cap vs. Circulating Supply </option>
-                    <option value="full_metrics_line"> 📉 All Line Metrics </option>
+                    <option value="full_metrics_line"> 📉 Reset </option>
                 </select>
     </div>
 
@@ -1010,143 +1105,188 @@ return (
             value={polarQuery || doughnutQuery} 
             onChange={handlePolarOrDoughnutQueryChange}
           >
-            <option value="" hidden>❄️🍩 Select Polar or Doughnut Chart Option</option>
+            <option value="" hidden>❄️🍩 Polar / Doughnut Chart </option>
             <option value="market_cap_vs_volume">❄️ Market Cap vs. Volume</option>
-            <option value="full_metrics_polar">❄️ All Polar Metrics</option>
-            <option value="full_metrics_doughnut">🍩 All Doughnut Metrics</option>
+            <option value="full_metrics_polar">❄️🍩Reset </option>
+            <option value="full_metrics_doughnut">🍩 Doughnut Metrics</option>
           </select>
    </div>
 
     <div className="ethereumquery-container">
           <select value={combinedQuery} onChange={handleCombinedQueryChange}>
-            <option value="" hidden>🚀 Select Combined Chart Option</option>
+            <option value="" hidden>🚀 Combined Chart </option>
             <option value="market_cap_vs_volume_market_cap_change"> 🚀 Market Cap / Change vs. Volume</option>
-            <option value="full_metrics_combined"> 🚀 All Combined Metrics</option>
+            <option value="full_metrics_combined"> 🚀 Reset </option>
           </select>
    </div>
 
     <div className="ethereumquery-container">
                 <select value={scatterQuery} onChange={handleScatterQueryChange}>
-                  <option value="" hidden>🌍Select Scatter Chart Option</option>
+                  <option value="" hidden>🌍 Scatter Chart </option>
                   <option value="market_cap_vs_volume_vs_price"> 🌍 Market Cap vs. Volume vs. Price </option>
-                  <option value="full_metrics_scatter"> 🌍 All Scatter Metrics </option>
+                  <option value="full_metrics_scatter"> 🌍 Reset </option>
                   </select>
           </div>
   </div>
   
   <div className="ethereumchart-container">
-{/* Polar Area Chart */}
-<div className="ethereumchart-wrapper combined">
-  <div className="ethereumchart-header"> {/* Updated to match CSS */}
-    <h2>Polar Area Chart for Ethereum KPIs</h2>
-    {polarQuery === 'market_cap_vs_volume' && (
-    <span className="ethereuminfo-icon" title="More Information">🤔</span> 
-    )}
-  </div>
-  <canvas id="ethPolarAreaChart"></canvas>
-  {loadingPolar ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
-      </div>
-    ) : (
-      polarInsights && (
-        <div className="ethereumchart-details">
-          <p>{polarInsights}</p>
+      {/* Polar Area Chart */}
+      <div className="ethereumchart-wrapper bar">
+        <div className="ethereumchart-header">
+          <h2>Polar Area Chart for Ethereum KPIs</h2>
+          {polarQuery === 'market_cap_vs_volume' && (
+            <span className="ethereuminfo-icon" title="More Information">🤔</span>
+          )}
         </div>
-      )
-    )}
-  </div>
+        <canvas id="ethPolarAreaChart"></canvas>
+        {loadingPolar ? (
+          <div className="ethereumloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
+            <div className="ethereumchart-details">
+              <div key={currentPolarInsight} className="ethereumchart-item">
+                <div className="ethereumchart-header">
+                  <span>{currentPolarInsight + 1}. </span>
+                </div>
+                <div className="ethereumchart-content">
+                  {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="ethereuminsight-navigation">
+                  <span className="ethereumnav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+                  <span className="ethereumnav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
+      </div>
 
-{/* Doughnut Chart */}
-<div className="ethereumchart-wrapper combined">
-  <div className="ethereumchart-header"> {/* Updated to match CSS */}
-    <h2>Doughnut Chart for Ethereum Metrics</h2>
-    {doughnutQuery === 'full_metrics_doughnut' && (
-    <span className="ethereuminfo-icon" title="More Information">🤔</span> 
-    )}
-  </div>
-  <canvas id="ethDoughnutChart"></canvas>
-  {loadingDoughnut ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
-      </div>
-    ) : (
-      doughnutInsights && (
-        <div className="ethereumchart-details">
-          <p>{doughnutInsights}</p>
+      {/* Doughnut Chart */}
+      <div className="ethereumchart-wrapper bar">
+        <div className="ethereumchart-header">
+          <h2>Doughnut Chart for Ethereum Metrics</h2>
+          {doughnutQuery === 'full_metrics_doughnut' && (
+            <span className="ethereuminfo-icon" title="More Information"></span>
+          )}
         </div>
-      )
-    )}
-  </div>
+        <canvas id="ethDoughnutChart"></canvas>
+        {loadingDoughnut ? (
+          <div className="ethereumloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          doughnutInsights && validDoughnutInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
+            <div className="ethereumchart-details">
+              <div key={currentDoughnutInsight} className="ethereumchart-item">
+                <div className="ethereumchart-header">
+                  <span>{currentDoughnutInsight + 1}. </span>
+                </div>
+                <div className="ethereumchart-content">
+                  {doughnutInsightContent ? doughnutInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="ethereuminsight-navigation">
+                  <span className="ethereumnav-arrow" onClick={handlePrevDoughnutInsight}>{'<'}</span>
+                  <span className="ethereumnav-arrow" onClick={handleNextDoughnutInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
+      </div>
 
-{/* Scatter Chart */}
-<div className="ethereumchart-wrapper combined">
-  <div className="ethereumchart-header"> {/* Updated to match CSS */}
-    <h2>Scatterplot Chart for Ethereum Metrics</h2>
-    {scatterQuery === 'market_cap_vs_volume_vs_price' && (
-    <span className="ethereuminfo-icon" title="More Information">🤔</span> 
-    )}
-  </div>
-  <canvas id="ethScatterChart"></canvas>
-  {loadingScatter ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
-      </div>
-    ) : (
-      scatterInsights && (
-        <div className="ethereumchart-details">
-          <p>{scatterInsights}</p>
+      {/* Scatter Chart */}
+      <div className="ethereumchart-wrapper bar">
+        <div className="ethereumchart-header">
+          <h2>Scatterplot Chart for Etheruem Metrics</h2>
+          {scatterQuery === 'market_cap_vs_volume_vs_price' && (
+            <span className="ethereuminfo-icon" title="More Information">🤔</span>
+          )}
         </div>
-      )
-    )}
-  </div>
+        <canvas id="ethScatterChart"></canvas>
+        {loadingScatter ? (
+          <div className="ethereumloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          scatterInsights && validScatterInsights.length > 0 && scatterQuery !== 'full_metrics_scatter' && (
+            <div className="ethereumchart-details">
+              <div key={currentScatterInsight} className="ethereumchart-item">
+                <div className="ethereumchart-header">
+                  <span>{currentScatterInsight + 1}. </span>
+                </div>
+                <div className="ethereumchart-content">
+                  {scatterInsightContent ? scatterInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="ethereuminsight-navigation">
+                  <span className="ethereumnav-arrow" onClick={handlePrevScatterInsight}>{'<'}</span>
+                  <span className="ethereumnav-arrow" onClick={handleNextScatterInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
+      </div>
 
-{/* Line Chart */}
-<div className="ethereumchart-wrapper combined">
-  <div className="ethereumchart-header"> {/* Updated to match CSS */}
-    <h2>Line Graph for Ethereum Metrics</h2>
-    {lineQuery === 'market_cap_vs_circulating_supply' && (
-    <span className="ethereuminfo-icon" title="More Information">🤔</span> 
-    )}
-  </div>
-  <canvas id="ethLineChart"></canvas>
-  {loadingLine ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
-      </div>
-    ) : (
-      lineInsights && (
-        <div className="ethereumchart-details">
-          <p>{lineInsights}</p>
+      {/* Line Chart */}
+      <div className="ethereumchart-wrapper bar">
+        <div className="ethereumchart-header">
+          <h2>Line Graph for Ethereum Metrics</h2>
+          {lineQuery === 'market_cap_vs_circulating_supply' && (
+            <span className="ethereuminfo-icon" title="More Information">🤔</span>
+          )}
         </div>
-      )
-    )}
-  </div>
+        <canvas id="ethLineChart"></canvas>
+        {loadingLine ? (
+          <div className="ethereumloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_linepolkadot' && (
+            <div className="ethereumchart-details">
+              <div key={currentLineInsight} className="ethereumchart-item">
+                <div className="ethereumchart-header">
+                  <span>{currentLineInsight + 1}. </span>
+                </div>
+                <div className="ethereumchart-content">
+                  {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="ethereuminsight-navigation">
+                  <span className="ethereumnav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+                  <span className="ethereumnav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
+      </div>
 
-{/* Combined Chart */}
-<div className="ethereumchart-wrapper combined">
-  <div className="ethereumchart-header"> {/* Updated to match CSS */}
-    <h2>Combined Bar and Line Graph Representing Ethereum's Market Volatility</h2>
-    {(combinedQuery === 'market_cap_vs_volume_market_cap_change') && (
-      <span className="ethinfo-icon" title="More Information">🤔</span> 
-    )}
-  </div>
-  <canvas id="ethCombinedChart"></canvas>
-  {loadingPriceChange ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
-      </div>
-    ) : (
-      priceChangeInsights && (
-        <div className="ethereumchart-details">
-          <p>{priceChangeInsights}</p>
+      {/* Combined Chart */}
+      <div className="ethereumchart-wrapper bar">
+        <div className="ethereumchart-header">
+          <h2>Combined Bar and Line Graph Representing Etheruem's Market Volatility</h2>
+          {combinedQuery === 'market_cap_vs_volume_market_cap_change' && (
+            <span className="ethereuminfo-icon" title="More Information">🤔</span>
+          )}
         </div>
-      )
-    )}
-  </div>
+        <canvas id="ethCombinedChart"></canvas>
+        {loadingPriceChange ? (
+          <div className="ethereumloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          priceChangeInsights && validCombinedInsights.length > 0 && combinedQuery !== 'full_metrics_combined' && (
+            <div className="ethereumchart-details">
+              <div key={currentCombinedInsight} className="ethereumchart-item">
+                <div className="ethereumchart-header">
+                  <span>{currentCombinedInsight + 1}. </span>
+                </div>
+                <div className="ethereumchart-content">
+                  {combinedInsightContent ? combinedInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="ethereuminsight-navigation">
+                  <span className="ethereumnav-arrow" onClick={handlePrevCombinedInsight}>{'<'}</span>
+                  <span className="ethereumnav-arrow" onClick={handleNextCombinedInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
+      </div>
     </div>
-</div>
-  );
+  </div>
+);
 };  
 
 export default EthereumCharts;

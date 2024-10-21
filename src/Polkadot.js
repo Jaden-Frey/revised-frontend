@@ -1090,164 +1090,301 @@ const toggleLineChartInfo = () => setShowLineChartInfo((prev) => !prev);
 const togglePolarChartInfo = () => setShowPolarChartInfo((prev) => !prev);
 const toggleDoughnutChartInfo = () => setShowDoughnutChartInfo((prev) => !prev);
 
-  return (
+// State for Polar Chart Insights
+const [currentPolarInsight, setCurrentPolarInsight] = useState(0);
+const [polarInsightContent, setPolarInsightContent] = useState(null);
+const validPolarInsights = polarInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setPolarInsightContent(validPolarInsights.length > 0 ? validPolarInsights[currentPolarInsight] : null);
+}, [currentPolarInsight, validPolarInsights]);
+
+const handleNextPolarInsight = () => {
+  const nextIndex = currentPolarInsight + 1;
+  setCurrentPolarInsight(nextIndex >= validPolarInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevPolarInsight = () => {
+  const prevIndex = currentPolarInsight - 1;
+  setCurrentPolarInsight(prevIndex < 0 ? validPolarInsights.length - 1 : prevIndex);
+};
+
+// State for Doughnut Chart Insights
+const [currentDoughnutInsight, setCurrentDoughnutInsight] = useState(0);
+const [doughnutInsightContent, setDoughnutInsightContent] = useState(null);
+const validDoughnutInsights = doughnutInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setDoughnutInsightContent(validDoughnutInsights.length > 0 ? validDoughnutInsights[currentDoughnutInsight] : null);
+}, [currentDoughnutInsight, validDoughnutInsights]);
+
+const handleNextDoughnutInsight = () => {
+  const nextIndex = currentDoughnutInsight + 1;
+  setCurrentDoughnutInsight(nextIndex >= validDoughnutInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevDoughnutInsight = () => {
+  const prevIndex = currentDoughnutInsight - 1;
+  setCurrentDoughnutInsight(prevIndex < 0 ? validDoughnutInsights.length - 1 : prevIndex);
+};
+
+// State for Stacked Bar Chart Insights
+const [currentStackedInsight, setCurrentStackedInsight] = useState(0);
+const [stackedInsightContent, setStackedInsightContent] = useState(null);
+const validStackedInsights = stackedInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setStackedInsightContent(validStackedInsights.length > 0 ? validStackedInsights[currentStackedInsight] : null);
+}, [currentStackedInsight, validStackedInsights]);
+
+const handleNextStackedInsight = () => {
+  const nextIndex = currentStackedInsight + 1;
+  setCurrentStackedInsight(nextIndex >= validStackedInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevStackedInsight = () => {
+  const prevIndex = currentStackedInsight - 1;
+  setCurrentStackedInsight(prevIndex < 0 ? validStackedInsights.length - 1 : prevIndex);
+};
+
+// State for Line Chart Insights
+const [currentLineInsight, setCurrentLineInsight] = useState(0);
+const [lineInsightContent, setLineInsightContent] = useState(null);
+const validLineInsights = lineInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+  setLineInsightContent(validLineInsights.length > 0 ? validLineInsights[currentLineInsight] : null);
+}, [currentLineInsight, validLineInsights]);
+
+const handleNextLineInsight = () => {
+  const nextIndex = currentLineInsight + 1;
+  setCurrentLineInsight(nextIndex >= validLineInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevLineInsight = () => {
+  const prevIndex = currentLineInsight - 1;
+  setCurrentLineInsight(prevIndex < 0 ? validLineInsights.length - 1 : prevIndex);
+};
+
+// State for Combined Chart Insights
+const [currentCombinedInsight, setCurrentCombinedInsight] = useState(0);
+const [combinedInsightContent, setCombinedInsightContent] = useState(null);
+const validCombinedInsights = priceChangeInsights.split('\n').filter(insight => insight.trim() !== "");
+
+useEffect(() => {
+ setCombinedInsightContent(validCombinedInsights.length > 0 ? validCombinedInsights[currentCombinedInsight] : null);
+}, [currentCombinedInsight, validCombinedInsights]);
+
+const handleNextCombinedInsight = () => {
+ const nextIndex = currentCombinedInsight + 1;
+ setCurrentCombinedInsight(nextIndex >= validCombinedInsights.length ? 0 : nextIndex);
+};
+
+const handlePrevCombinedInsight = () => {
+ const prevIndex = currentCombinedInsight - 1;
+ setCurrentCombinedInsight(prevIndex < 0 ? validCombinedInsights.length - 1 : prevIndex);
+};
+
+return (
   <div className="polkadotpage-wrapper">
     <h1 className="page-title">Polkadot Visualization's</h1>
     <div className="faq-icon" onClick={() => window.location.href = 'https://revised-backend-refined.onrender.com/faq'}>
-    <i className="bi bi-question-circle" title="Off to FAQ"></i>
+      <i className="bi bi-question-circle" title="Off to FAQ"></i>
     </div>
 
     <div className="polkadotchart-container">
       <div className="polkadotquery-container">
-                  <select value={polarQuery} onChange={handlePolarQueryChange}>
-                      <option value="" hidden>❄️ Select Polar Chart Option</option>
-                      <option value="market_cap_vs_total_volume"> ❄️ Market Cap vs. Volume </option>
-                      <option value="full_metrics_polar"> ❄️ All Polar Metrics </option>
-                  </select>
+        <select value={polarQuery} onChange={handlePolarQueryChange}>
+          <option value="" hidden>❄️ Polar Chart </option>
+          <option value="market_cap_vs_total_volume"> ❄️ Market Cap vs. Volume </option>
+          <option value="full_metrics_polar"> ❄️ Reset </option>
+        </select>
       </div>
 
       <div className="polkadotquery-container">
-                  <select value={doughnutQuery} onChange={handleDoughnutQueryChange}>
-                     <option value="" hidden>🍩 Select Doughnut Chart Option</option>
-                     <option value="volume_vs_supply"> 🍩 Volume vs. Supply</option>
-                     <option value="full_metrics_doughnut"> 🍩 All Doughnut Metrics </option>
-                  </select>
+        <select value={doughnutQuery} onChange={handleDoughnutQueryChange}>
+          <option value="" hidden>🍩 Doughnut Chart </option>
+          <option value="volume_vs_supply"> 🍩 Volume vs. Supply</option>
+          <option value="full_metrics_doughnut"> 🍩 Reset </option>
+        </select>
       </div>
 
       <div className="polkadotquery-container">
-          <select value={combinedQuery} onChange={handleCombinedQueryChange}>
-            <option value="" hidden>🚀 Select Combined Chart Option</option>
-            <option value="market_cap_vs_volume_market_cap_change"> 🚀 Market Cap / Change vs. Volume</option>
-            <option value="full_metrics_combined"> 🚀 All Combined Metrics</option>
-          </select>
-    </div>
+        <select value={combinedQuery} onChange={handleCombinedQueryChange}>
+          <option value="" hidden>🚀 Combined Chart </option>
+          <option value="market_cap_vs_volume_market_cap_change"> 🚀 Market Cap / Change vs. Volume</option>
+          <option value="full_metrics_combined"> 🚀 Reset </option>
+        </select>
+      </div>
 
       <div className="dogequery-container">
-        <select 
-            value={lineQuery || stackedQuery} 
-            onChange={handleLineOrStackedQueryChange}
-          >
-            <option value="" hidden>📉🏗️ Select Line or Stacked Chart Option</option>
-            <option value="market_cap_vs_circulating_supply">📉 Market Cap vs. Circulating Supply</option>
-            <option value="full_metrics_line">📉 All Line Metrics</option>
-            <option value="full_metrics_stacked">🏗️ All Stacked Metrics</option>
-          </select>
-   </div>
+        <select value={lineQuery || stackedQuery} onChange={handleLineOrStackedQueryChange}>
+          <option value="" hidden>📉🏗️ Line / Stacked Chart </option>
+          <option value="market_cap_vs_circulating_supply">📉 Market Cap vs. Circulating Supply</option>
+          <option value="full_metrics_line">📉 🏗️ Reset </option>
+          <option value="full_metrics_stacked">🏗️ Stacked Metrics</option>
+        </select>
+      </div>
     </div>
 
     <div className="polkadotchart-container">
-        {/* Polar Area Chart */}
-  <div className="polkadotchart-wrapper gbar">
-  <div className="polkadotchart-header">
-    <h2>Polar Area Chart for Polkadot KPIs</h2>
-    {polarQuery === 'market_cap_vs_total_volume' && (
-       <span className="polkadotinfo-icon" title="More Information">🤔</span> 
-     )}
-  </div>
-  <canvas id="polPolarAreaChart"></canvas>
-  {loadingPolar ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+      {/* Doughnut Chart */}
+      <div className="polkadotchart-wrapper bar">
+        <div className="polkadotchart-header">
+          <h2>Doughnut Chart for Polkadot Metrics</h2>
+          {doughnutQuery === 'volume_vs_supply' && (
+            <span className="polkadotinfo-icon" title="More Information">🤔</span>
+          )}
+        </div>
+        <canvas id="polDoughnutChart"></canvas>
+        {loadingDoughnut ? (
+          <div className="polkadotloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          doughnutInsights && validDoughnutInsights.length > 0 && doughnutQuery !== 'full_metrics_doughnut' && (
+            <div className="polkadotchart-details">
+              <div key={currentDoughnutInsight} className="polkadotchart-item">
+                <div className="polkadotchart-header">
+                  <span>{currentDoughnutInsight + 1}. </span>
+                </div>
+                <div className="polkadotchart-content">
+                  {doughnutInsightContent ? doughnutInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="polkadotinsight-navigation">
+                  <span className="polkadotnav-arrow" onClick={handlePrevDoughnutInsight}>{'<'}</span>
+                  <span className="polkadotnav-arrow" onClick={handleNextDoughnutInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      polarInsights && (
-        <div className="polkadotchart-details">
-          <p>{polarInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
-{/* Doughnut Chart */}
-<div className="polkadotchart-wrapper gbar">
-  <div className="polkadotchart-header">
-    <h2>Doughnut Chart for Polkadot Metrics</h2>
-    {doughnutQuery === 'volume_vs_supply' && (
-        <span className="polkadotinfo-icon" title="More Information">🤔</span> 
-    )}
-  </div>
-  <canvas id="polDoughnutChart"></canvas>
-  {loadingDoughnut ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+       {/* Polar Area Chart */}
+       <div className="polkadotchart-wrapper bar">
+        <div className="polkadotchart-header">
+          <h2>Polar Area Chart for Polkadot KPIs</h2>
+          {polarQuery === 'market_cap_vs_volume' && (
+            <span className="polkadotinfo-icon" title="More Information">🤔</span>
+          )}
+        </div>
+        <canvas id="polPolarAreaChart"></canvas>
+        {loadingPolar ? (
+          <div className="polkadotloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          polarInsights && validPolarInsights.length > 0 && polarQuery !== 'full_metrics_polar' && (
+            <div className="polkadotchart-details">
+              <div key={currentPolarInsight} className="polkadotchart-item">
+                <div className="polkadotchart-header">
+                  <span>{currentPolarInsight + 1}. </span>
+                </div>
+                <div className="polkadotchart-content">
+                  {polarInsightContent ? polarInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="polkadotinsight-navigation">
+                  <span className="polkadotnav-arrow" onClick={handlePrevPolarInsight}>{'<'}</span>
+                  <span className="polkadotnav-arrow" onClick={handleNextPolarInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      doughnutInsights && (
-        <div className="polkadotchart-details">
-          <p>{doughnutInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
-        {/* Combined Chart*/}
-        <div className="polkadotchart-wrapper gbar">
-          <div className="polkadotchart-header">
-            <h2>Combined Bar and Line Graph Representing Polkadot's Market Volatility</h2>
-            {(combinedQuery === 'market_cap_vs_volume_market_cap_change') && (
-              <span className="polkadotinfo-icon" title="More Information">🤔</span> 
-            )}
-          </div>
-          <canvas id="polCombinedChart"></canvas>
-          {loadingPriceChange ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+      {/* Line Chart */}
+      <div className="polkadotchart-wrapper bar">
+        <div className="polkadotchart-header">
+          <h2>Line Graph for Polkadot Metrics</h2>
+          {lineQuery === 'market_cap_vs_circulating_supply' && (
+            <span className="polkadotinfo-icon" title="More Information">🤔</span>
+          )}
+        </div>
+        <canvas id="polLineChart"></canvas>
+        {loadingLine ? (
+          <div className="polkadotloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          lineInsights && validLineInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
+            <div className="polkadotchart-details">
+              <div key={currentLineInsight} className="polkadotchart-item">
+                <div className="polkadotchart-header">
+                  <span>{currentLineInsight + 1}. </span>
+                </div>
+                <div className="polkadotchart-content">
+                  {lineInsightContent ? lineInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="polkadotinsight-navigation">
+                  <span className="polkadotnav-arrow" onClick={handlePrevLineInsight}>{'<'}</span>
+                  <span className="polkadotnav-arrow" onClick={handleNextLineInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      priceChangeInsights && (
-        <div className="polkadotchart-details">
-          <p>{priceChangeInsights}</p>
-        </div>
-      )
-    )}
-  </div>
 
-        {/* Line Chart */}
-        <div className="polkadotchart-wrapper li">
-          <div className="polkadotchart-header">
-            <h2>Line Graph for Polkadot Metrics</h2>
-            {lineQuery === 'market_cap_vs_circulating_supply' && (
-              <span className="polkadotinfo-icon" title="More Information">🤔</span> 
-            )}
-          </div>
-          <canvas id="polLineChart"></canvas>
-          {loadingLine ? (
-          <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+      {/* Combined Chart */}
+      <div className="polkadotchart-wrapper bar">
+        <div className="polkadotchart-header">
+          <h2>Combined Bar and Line Graph Representing Polkadot's Market Volatility</h2>
+          {combinedQuery === 'market_cap_vs_volume_market_cap_change' && (
+            <span className="polkadotinfo-icon" title="More Information">🤔</span>
+          )}
         </div>
-    ) : (
-    lineInsights && (
-        <div className="polkadotchart-details">
-          <p>{lineInsights}</p>
-        </div>
-      )
-    )}
-  </div>
-
-        {/* Stacked Bar Chart*/}
-        <div className="polkadotchart-wrapper stacks">
-          <div className="polkadotchart-header">
-            <h2>Stacked Bar Chart for Polkadot Metrics</h2>
-            {stackedQuery === 'full_metrics_stacked' && (
-              <span className="polkadotinfo-icon" title="More Information">🤔</span> 
-            )}
-          </div>
-          <canvas id="polStackedBarChart"></canvas>
-          {loadingStacked ? (
-      <div className="loading-indicator">
-        Fetching insights<LoadingEllipsis />
+        <canvas id="polCombinedChart"></canvas>
+        {loadingPriceChange ? (
+          <div className="polkadotloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          priceChangeInsights && validCombinedInsights.length > 0 && combinedQuery !== 'full_metrics_combined' && (
+            <div className="polkadotchart-details">
+              <div key={currentCombinedInsight} className="polkadotchart-item">
+                <div className="polkadotchart-header">
+                  <span>{currentCombinedInsight + 1}. </span>
+                </div>
+                <div className="polkadotchart-content">
+                  {combinedInsightContent ? combinedInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="polkadotinsight-navigation">
+                  <span className="polkadotnav-arrow" onClick={handlePrevCombinedInsight}>{'<'}</span>
+                  <span className="polkadotnav-arrow" onClick={handleNextCombinedInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
-    ) : (
-      stackedInsights && (
-        <div className="polkadotchart-details">
-          <p>{stackedInsights}</p>
+
+      {/* Stacked Bar Chart */}
+      <div className="polkadotchart-wrapper bar">
+        <div className="polkadotchart-header">
+          <h2>Stacked Chart for Dogecoin Metrics</h2>
+          {stackedQuery === 'full_metrics_stacked' && (
+            <span className="polkadotinfo-icon" title="More Information"></span>
+          )}
         </div>
-      )
-    )}
-        </div>
+        <canvas id="polStackedBarChart"></canvas>
+        {loadingStacked ? (
+          <div className="polkadotloading-indicator">Fetching insights<LoadingEllipsis /></div>
+        ) : (
+          stackedInsights && validStackedInsights.length > 0 && lineQuery !== 'full_metrics_line' && (
+            <div className="polkadotchart-details">
+              <div key={currentStackedInsight} className="polkadotchart-item">
+                <div className="polkadotchart-header">
+                  <span>{currentStackedInsight + 1}. </span>
+                </div>
+                <div className="polkadotchart-content">
+                  {stackedInsightContent ? stackedInsightContent.replace(/◆/g, '').trim() : 'No information available.'}
+                </div>
+                <div className="polkadotinsight-navigation">
+                  <span className="polkadotnav-arrow" onClick={handlePrevStackedInsight}>{'<'}</span>
+                  <span className="polkadotnav-arrow" onClick={handleNextStackedInsight}>{'>'}</span>
+                </div>
+              </div>
+            </div>
+          )
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default PolkadotCharts;
